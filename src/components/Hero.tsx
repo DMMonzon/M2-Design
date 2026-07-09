@@ -77,7 +77,7 @@ export default function Hero({ currentLang }: HeroProps) {
               {t.heroCTA1}
             </button>
             <button
-              onClick={() => scrollToSection('proj-branding')}
+              onClick={() => scrollToSection('proj-apps')}
               className="px-4 py-2.5 sm:px-8 sm:py-3.5 bg-cyber-purple/20 border border-cyber-pink/30 text-white font-black uppercase tracking-widest rounded-full hover:border-cyber-pink hover:bg-cyber-pink hover:scale-[1.02] active:scale-95 hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-300 text-[10px] sm:text-xs"
               id="hero-cta-work"
             >
@@ -150,7 +150,7 @@ export default function Hero({ currentLang }: HeroProps) {
       </div>
 
       {/* Scroll indicator - hidden on mobile for clean screen constraint */}
-      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center space-y-2 cursor-pointer z-10" onClick={() => scrollToSection('proj-branding')}>
+      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center space-y-2 cursor-pointer z-10" onClick={() => scrollToSection('proj-apps')}>
         <span className="text-[10px] font-metrophobic tracking-widest text-white/40 uppercase">
           {currentLang === 'ES' ? 'Deslizar para explorar' : 'Scroll to explore'}
         </span>

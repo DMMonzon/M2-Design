@@ -2,30 +2,30 @@ import { Project, SkillItem, TechnologyItem } from './types';
 
 export const projectsData: Project[] = [
   {
-    id: 'proj-branding',
-    area: 'branding',
-    areaLabel: { ES: 'Branding', EN: 'Branding' },
+    id: 'proj-apps',
+    area: 'apps',
+    areaLabel: { ES: 'App', EN: 'App' },
     title: {
-      ES: 'Transformemos tu marca en una gran historia visual.',
-      EN: 'Let\'s transform your brand into a great visual story.',
+      ES: 'Innovación a medida: aplicaciones que potencian tu marca.',
+      EN: 'Tailor-made innovation: applications that empower your brand.',
     },
     description: {
-      ES: '¿Listo para darle a tu marca una nueva y cautivadora narrativa visual? Compárteme tu historia, y juntos crearemos un branding que refleje tu esencia y conecte con tu público.',
-      EN: 'Ready to give your brand a new and captivating visual narrative? Share your story with me, and together we will create branding that reflects your essence and connects with your audience.',
+      ES: 'Llevemos tus ideas al entorno móvil y web con plataformas intuitivas y de alto rendimiento. Creamos la herramienta digital que tu negocio necesita para automatizar procesos, conectar con tu audiencia y generar resultados reales desde el primer día.',
+      EN: 'Let\'s bring your ideas to the mobile and web environment with intuitive, high-performance platforms. We create the digital tool your business needs to automate processes, connect with your audience, and generate real results from day one.',
     },
     testimonial: {
-      name: 'Camila Méndez',
-      role: { ES: 'Socia Gerente', EN: 'Managing Partner' },
+      name: 'Lucas Benítez',
+      role: { ES: 'CEO de CryptoNeón', EN: 'CEO of CryptoNeon' },
       text: {
-        ES: 'Por fin un diseñador que entiende que un logo tiene que funcionar en una pantalla chiquita y en un cartel gigante. Súper profesional y rápido.',
-        EN: 'Finally a designer who gets that a logo needs to work on a small smartwatch screen as well as on a giant billboard. Super pro and fast.',
+        ES: 'Martín entendió al toque lo que queríamos transmitir. El diseño no solo es hermoso sino que la tasa de conversión subió un 35% desde que implementamos su prototipo.',
+        EN: 'Martín immediately understood what we wanted to convey. The design is not only beautiful, but the conversion rate jumped 35% since implementing his prototype.',
       },
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80',
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&h=120&q=80',
     },
-    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&h=800&q=80',
-    likes: 298,
-    commentsCount: 39,
-    shares: 74,
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&h=800&q=80',
+    likes: 254,
+    commentsCount: 42,
+    shares: 89,
   },
   {
     id: 'proj-web',
@@ -52,6 +52,32 @@ export const projectsData: Project[] = [
     likes: 312,
     commentsCount: 56,
     shares: 112,
+  },
+  {
+    id: 'proj-branding',
+    area: 'branding',
+    areaLabel: { ES: 'Branding', EN: 'Branding' },
+    title: {
+      ES: 'Transformemos tu marca en una gran historia visual.',
+      EN: 'Let\'s transform your brand into a great visual story.',
+    },
+    description: {
+      ES: '¿Listo para darle a tu marca una nueva y cautivadora narrativa visual? Compárteme tu historia, y juntos crearemos un branding que refleje tu esencia y conecte con tu público.',
+      EN: 'Ready to give your brand a new and captivating visual narrative? Share your story with me, and together we will create branding that reflects your essence and connects with your audience.',
+    },
+    testimonial: {
+      name: 'Camila Méndez',
+      role: { ES: 'Socia Gerente', EN: 'Managing Partner' },
+      text: {
+        ES: 'Por fin un diseñador que entiende que un logo tiene que funcionar en una pantalla chiquita y en un cartel gigante. Súper profesional y rápido.',
+        EN: 'Finally a designer who gets that a logo needs to work on a small smartwatch screen as well as on a giant billboard. Super pro and fast.',
+      },
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&h=800&q=80',
+    likes: 298,
+    commentsCount: 39,
+    shares: 74,
   },
   {
     id: 'proj-textil',
