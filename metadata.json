@@ -1,0 +1,6 @@
+{
+  "name": "M2 Design",
+  "description": "Portfolio de diseño gráfico y web de Martín Monzón (M2 Design) con estilo futurista, soporte para inglés/español y diseño totalmente responsivo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
