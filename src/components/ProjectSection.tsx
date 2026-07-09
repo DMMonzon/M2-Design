@@ -54,14 +54,16 @@ export default function ProjectSection({
   // Carousel/Tabs system states
   const [activeExampleIndex, setActiveExampleIndex] = useState(0);
   const [examples, setExamples] = useState(project.examples);
+  const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
 
-  // Auto rotation effect (every 2 seconds)
+  // Auto rotation effect (every 2 seconds, stops on hover)
   useEffect(() => {
+    if (isAutoplayPaused) return;
     const interval = setInterval(() => {
       setActiveExampleIndex((prev) => (prev + 1) % project.examples.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, [project.examples.length]);
+  }, [project.examples.length, isAutoplayPaused]);
 
   // Antispam states
   const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
@@ -303,7 +305,11 @@ export default function ProjectSection({
         
         {/* Left: Beautiful Design Asset Thumbnail Panel */}
         <div className="w-full lg:w-[50%] flex flex-col justify-between gap-3 select-none">
-          <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-black/40 ${colors.glow} group max-w-md lg:max-w-none mx-auto`}>
+          <div
+            onMouseEnter={() => setIsAutoplayPaused(true)}
+            onMouseLeave={() => setIsAutoplayPaused(false)}
+            className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-black/40 ${colors.glow} group max-w-md lg:max-w-none mx-auto`}
+          >
             {/* Glowing corner brackets */}
             <div className={`absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 opacity-60 group-hover:opacity-100 transition-opacity`} style={{ borderColor: colors.accent }} />
             <div className={`absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 opacity-60 group-hover:opacity-100 transition-opacity`} style={{ borderColor: colors.accent }} />
@@ -356,10 +362,20 @@ export default function ProjectSection({
                 <span className="text-[8px] font-mono font-bold mt-0.5">{examples[activeExampleIndex].commentsCount}</span>
               </button>
             </div>
+
+            {/* Detail Access Button positioned absolutely over the image */}
+            <button
+              onClick={() => alert(currentLang === 'ES' ? 'El detalle del trabajo se creará en una etapa posterior.' : 'Work detail page will be created in a later stage.')}
+              className="absolute bottom-6 right-6 z-20 px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest rounded-lg border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black hover:border-white hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+              id={`detail-${project.id}`}
+            >
+              <span>{currentLang === 'ES' ? 'Ver Detalle' : 'View Detail'}</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
           </div>
 
-          {/* Carousel Solapas & Detail Button */}
-          <div className="mt-2 flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
+          {/* Carousel Solapas */}
+          <div className="mt-2 flex flex-row items-center justify-start gap-3 px-2">
             {/* Solapas (Tabs) */}
             <div className="flex items-center space-x-2 flex-wrap gap-y-2">
               {examples.map((ex, idx) => {
@@ -381,15 +397,6 @@ export default function ProjectSection({
                 );
               })}
             </div>
-
-            {/* Detail Access Button */}
-            <button
-              onClick={() => alert(currentLang === 'ES' ? 'El detalle del trabajo se creará en una etapa posterior.' : 'Work detail page will be created in a later stage.')}
-              className="px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest rounded-lg border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 shrink-0"
-            >
-              <span>{currentLang === 'ES' ? 'Ver Detalle' : 'View Detail'}</span>
-              <ArrowRight className="w-3 h-3" />
-            </button>
           </div>
         </div>
 
