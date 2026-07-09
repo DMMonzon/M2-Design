@@ -84,12 +84,9 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
         {/* Intro Section Header */}
         <div className="text-center lg:text-left max-w-4xl space-y-1 sm:space-y-2">
           <h2 className="font-display text-2xl sm:text-4xl md:text-5xl xl:text-6xl font-black tracking-tighter text-white uppercase leading-none">
-            {t.contactTitle}{' '}
-            <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>
-              {t.contactSubtitle}
-            </span>
+            {t.contactTitle} {t.contactSubtitle}
           </h2>
-          <p className="text-xs sm:text-sm md:text-base text-white/50 max-w-3xl leading-relaxed font-light italic">
+          <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/50 max-w-3xl leading-relaxed font-light italic">
             "{t.contactIntro}"
           </p>
         </div>

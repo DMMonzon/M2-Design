@@ -40,19 +40,14 @@ export default function Hero({ currentLang }: HeroProps) {
             transition={{ duration: 0.8 }}
             className="space-y-2"
           >
-            {/* Tagline/Pre-title */}
-            <span className="inline-block text-[10px] sm:text-xs md:text-sm font-mono tracking-widest text-cyber-blue uppercase font-bold">
+            {/* Tagline/Pre-title (Volanta) */}
+            <span className="inline-block text-[10px] sm:text-xs md:text-sm font-metrophobic tracking-widest text-cyber-blue uppercase font-bold">
               // {t.heroTitlePre}
             </span>
 
-            {/* Main elegant heading in Artistic Flair style */}
+            {/* Main elegant heading in Exo font */}
             <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95] text-balance">
-              Explorá cómo <br className="hidden md:inline" />
-              transformo <br />
-              <span className="text-transparent block my-1" style={{ WebkitTextStroke: '2.5px #ffffff' }}>
-                tus ideas
-              </span>
-              en diseños.
+              {t.heroTitleMain}
             </h1>
           </motion.div>
 
@@ -60,7 +55,7 @@ export default function Hero({ currentLang }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xs sm:text-sm md:text-lg text-white/60 max-w-lg leading-relaxed font-light"
+            className="font-metrophobic text-xs sm:text-sm md:text-lg text-white/60 max-w-lg leading-relaxed font-light"
           >
             {currentLang === 'ES' 
               ? 'Con un enfoque disruptivo y tecnologías de vanguardia, fusiono arte y código para crear experiencias memorables.'
@@ -82,7 +77,7 @@ export default function Hero({ currentLang }: HeroProps) {
               {t.heroCTA1}
             </button>
             <button
-              onClick={() => scrollToSection('proj-apps')}
+              onClick={() => scrollToSection('proj-branding')}
               className="px-4 py-2.5 sm:px-8 sm:py-3.5 bg-cyber-purple/20 border border-cyber-pink/30 text-white font-black uppercase tracking-widest rounded-full hover:border-cyber-pink hover:bg-cyber-pink hover:scale-[1.02] active:scale-95 hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-300 text-[10px] sm:text-xs"
               id="hero-cta-work"
             >
@@ -155,8 +150,8 @@ export default function Hero({ currentLang }: HeroProps) {
       </div>
 
       {/* Scroll indicator - hidden on mobile for clean screen constraint */}
-      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center space-y-2 cursor-pointer z-10" onClick={() => scrollToSection('proj-apps')}>
-        <span className="text-[10px] font-mono tracking-widest text-white/40 uppercase">
+      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center space-y-2 cursor-pointer z-10" onClick={() => scrollToSection('proj-branding')}>
+        <span className="text-[10px] font-metrophobic tracking-widest text-white/40 uppercase">
           {currentLang === 'ES' ? 'Deslizar para explorar' : 'Scroll to explore'}
         </span>
         <div className="w-5 h-8 rounded-full border border-white/20 p-1 flex justify-center">

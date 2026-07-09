@@ -2,120 +2,16 @@ import { Project, SkillItem, TechnologyItem } from './types';
 
 export const projectsData: Project[] = [
   {
-    id: 'proj-apps',
-    area: 'apps',
-    areaLabel: { ES: 'Apps', EN: 'Apps' },
-    title: {
-      ES: 'CryptoNeón — UX/UI Fintech',
-      EN: 'CryptoNeon — Fintech UX/UI',
-    },
-    description: {
-      ES: 'Diseñé una interfaz móvil de inversión que rompe con lo aburrido. Estética cyberpunk, widgets de alta legibilidad y un flujo de transacciones ultra rápido para que operar sea un placer. Menos pasos, más fluidez y un modo oscuro que cuida tus ojos a la noche.',
-      EN: 'I designed a mobile investment interface that breaks the boring mold. Cyberpunk aesthetics, high-readability widgets, and an ultra-fast transaction flow to make trading a pleasure. Fewer steps, more fluidity, and an eye-friendly dark mode.',
-    },
-    testimonial: {
-      name: 'Lucas Benítez',
-      role: { ES: 'CEO de CryptoNeón', EN: 'CEO of CryptoNeon' },
-      text: {
-        ES: 'Martín entendió al toque lo que queríamos transmitir. El diseño no solo es hermoso sino que la tasa de conversión subió un 35% desde que implementamos su prototipo.',
-        EN: 'Martín immediately understood what we wanted to convey. The design is not only beautiful, but the conversion rate jumped 35% since implementing his prototype.',
-      },
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&h=120&q=80',
-    },
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&h=800&q=80',
-    likes: 254,
-    commentsCount: 42,
-    shares: 89,
-  },
-  {
-    id: 'proj-web',
-    area: 'web',
-    areaLabel: { ES: 'Web', EN: 'Web' },
-    title: {
-      ES: 'Estudio Némesis — Landing Futurista',
-      EN: 'Nemesis Studio — Futuristic Landing',
-    },
-    description: {
-      ES: 'Desarrollé la landing page para un estudio de arquitectura 3D con un look hiper-limpio, animaciones fluidas basadas en scroll y optimización SEO al mango. Cada sección encaja perfecto y la navegación es intuitiva, cargando en menos de un segundo.',
-      EN: 'I developed the landing page for a 3D architecture studio with a hyper-clean look, smooth scroll-based animations, and top-tier SEO optimization. Every section fits perfectly, and the navigation is intuitive, loading in under a second.',
-    },
-    testimonial: {
-      name: 'Sofía Rossi',
-      role: { ES: 'Directora de Arte', EN: 'Art Director' },
-      text: {
-        ES: 'La rompió toda. Logró una fluidez increíble y un estilo espacial que nuestros clientes elogian siempre. Es hiper prolijo con los detalles.',
-        EN: 'He absolutely crushed it. Achieved incredible smoothness and a cosmic style that our clients always praise. Extremely neat with the details.',
-      },
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80',
-    },
-    image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&h=800&q=80',
-    likes: 312,
-    commentsCount: 56,
-    shares: 112,
-  },
-  {
-    id: 'proj-graphic',
-    area: 'graphic',
-    areaLabel: { ES: 'Gráfico', EN: 'Graphic' },
-    title: {
-      ES: 'Metrópolis 2050 — Afiches Brutalistas',
-      EN: 'Metropolis 2050 — Brutalist Posters',
-    },
-    description: {
-      ES: 'Serie de afiches promocionales utilizando tipografías gigantes, contrastes violentos y diagramación asimétrica de estilo suizo-brutalista. Una composición pensada para destacar en la calle o en redes y captar la atención de cualquiera al instante.',
-      EN: 'A series of promotional posters featuring giant typography, high contrast, and asymmetrical Swiss-brutalist layouts. Compositions crafted to stand out on the street or in social media feeds, capturing immediate attention.',
-    },
-    testimonial: {
-      name: 'Gaspar Vega',
-      role: { ES: 'Coordinador de Eventos', EN: 'Event Coordinator' },
-      text: {
-        ES: 'Buscábamos algo disruptivo y Martín nos trajo una propuesta con muchísima fuerza visual. Agotamos las entradas en tiempo récord.',
-        EN: 'We wanted something disruptive and Martín delivered a proposal with huge visual impact. We sold out all tickets in record time.',
-      },
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80',
-    },
-    image: 'https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=1200&h=800&q=80',
-    likes: 187,
-    commentsCount: 29,
-    shares: 45,
-  },
-  {
-    id: 'proj-textil',
-    area: 'textil',
-    areaLabel: { ES: 'Textil', EN: 'Fashion' },
-    title: {
-      ES: 'Komorebi — Indumentaria Urbana',
-      EN: 'Komorebi — Streetwear Apparel',
-    },
-    description: {
-      ES: 'Diseño conceptual y estampas para una línea de ropa urbana inspirada en el synthwave y el cyberpunk. Creación de vectores para serigrafía de alta definición y mockups realistas de prendas sobredimensionadas con paletas flúor.',
-      EN: 'Conceptual apparel design and prints for a streetwear line inspired by synthwave and cyberpunk cultures. Engineered high-definition vector screen prints and oversized garment mockups with glowing palettes.',
-    },
-    testimonial: {
-      name: 'Mateo Ortega',
-      role: { ES: 'Fundador de Komorebi Co.', EN: 'Founder of Komorebi Co.' },
-      text: {
-        ES: 'Un laburo impecable. Martín no solo tiró los diseños de las estampas sino que nos ayudó con la identidad visual de la campaña. Crack total.',
-        EN: 'Impeccable work. Martín did not just deliver the print designs; he guided our campaign visual identity too. Total legend.',
-      },
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&h=120&q=80',
-    },
-    image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&h=800&q=80',
-    likes: 421,
-    commentsCount: 88,
-    shares: 201,
-  },
-  {
     id: 'proj-branding',
     area: 'branding',
     areaLabel: { ES: 'Branding', EN: 'Branding' },
     title: {
-      ES: 'Vórtice — Identidad de Marca',
-      EN: 'Vortice — Brand Identity',
+      ES: 'Transformemos tu marca en una gran historia visual.',
+      EN: 'Let\'s transform your brand into a great visual story.',
     },
     description: {
-      ES: 'Manual de marca completo, logotipo adaptativo y papelería digital para una consultora tecnológica de vanguardia. Un sistema visual basado en la idea de expansión constante, con tipografías sans de excelente rendimiento y tonos oscuros sofisticados.',
-      EN: 'A complete brand guidelines manual, adaptive logo design, and digital stationery for a leading tech consultancy. A visual system centered on constant expansion, premium sans typography, and sophisticated dark tones.',
+      ES: '¿Listo para darle a tu marca una nueva y cautivadora narrativa visual? Compárteme tu historia, y juntos crearemos un branding que refleje tu esencia y conecte con tu público.',
+      EN: 'Ready to give your brand a new and captivating visual narrative? Share your story with me, and together we will create branding that reflects your essence and connects with your audience.',
     },
     testimonial: {
       name: 'Camila Méndez',
@@ -132,16 +28,94 @@ export const projectsData: Project[] = [
     shares: 74,
   },
   {
+    id: 'proj-web',
+    area: 'web',
+    areaLabel: { ES: 'Web', EN: 'Web' },
+    title: {
+      ES: 'Experiencias web que cautivan y convierten.',
+      EN: 'Web experiences that captivate and convert.',
+    },
+    description: {
+      ES: 'Transformemos tu presencia online en una experiencia inolvidable. Creemos sitios web intuitivos y atractivos que impacten a tu audiencia y generen resultados reales.',
+      EN: 'Let\'s transform your online presence into an unforgettable experience. Let\'s create intuitive and attractive websites that impact your audience and deliver real results.',
+    },
+    testimonial: {
+      name: 'Sofía Rossi',
+      role: { ES: 'Directora de Arte', EN: 'Art Director' },
+      text: {
+        ES: 'La rompió toda. Logró una fluidez increíble y un estilo espacial que nuestros clientes elogian siempre. Es hiper prolijo con los detalles.',
+        EN: 'He absolutely crushed it. Achieved incredible smoothness and a cosmic style that our clients always praise. Extremely neat with the details.',
+      },
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&h=800&q=80',
+    likes: 312,
+    commentsCount: 56,
+    shares: 112,
+  },
+  {
+    id: 'proj-textil',
+    area: 'textil',
+    areaLabel: { ES: 'Textil', EN: 'Textile' },
+    title: {
+      ES: 'Diseño de indumentaria que comunica e impacta.',
+      EN: 'Apparel design that communicates and impacts.',
+    },
+    description: {
+      ES: 'Desarrollo diseños para equipos deportivos y empresas, creando prendas con estilo propio. Mi objetivo es que cada trabajo comunique la esencia de la marca y genere un impacto positivo.',
+      EN: 'I develop designs for sports teams and companies, creating garments with their own style. My goal is for each work to communicate the brand\'s essence and generate a positive impact.',
+    },
+    testimonial: {
+      name: 'Mateo Ortega',
+      role: { ES: 'Fundador de Komorebi Co.', EN: 'Founder of Komorebi Co.' },
+      text: {
+        ES: 'Un laburo impecable. Martín no solo tiró los diseños de las estampas sino que nos ayudó con la identidad visual de la campaña. Crack total.',
+        EN: 'Impeccable work. Martín did not just deliver the print designs; he guided our campaign visual identity too. Total legend.',
+      },
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&h=800&q=80',
+    likes: 421,
+    commentsCount: 88,
+    shares: 201,
+  },
+  {
+    id: 'proj-graphic',
+    area: 'graphic',
+    areaLabel: { ES: 'Gráfico', EN: 'Graphic' },
+    title: {
+      ES: 'Narrativa visual en papel con atención al detalle.',
+      EN: 'Visual narrative on paper with attention to detail.',
+    },
+    description: {
+      ES: 'Material impreso que se adapta a las necesidades and preferencias de cada público: revistas con contenido especializado, banners publicitarios, flyers de interés y mucho más.',
+      EN: 'Printed material tailored to the needs and preferences of each audience: specialized magazines, advertising banners, engaging flyers, and much more.',
+    },
+    testimonial: {
+      name: 'Gaspar Vega',
+      role: { ES: 'Coordinador de Eventos', EN: 'Event Coordinator' },
+      text: {
+        ES: 'Buscábamos algo disruptivo y Martín nos trajo una propuesta con muchísima fuerza visual. Agotamos las entradas en tiempo récord.',
+        EN: 'We wanted something disruptive and Martín delivered a proposal with huge visual impact. We sold out all tickets in record time.',
+      },
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    image: 'https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=1200&h=800&q=80',
+    likes: 187,
+    commentsCount: 29,
+    shares: 45,
+  },
+  {
     id: 'proj-media',
     area: 'media',
     areaLabel: { ES: 'Media', EN: 'Media' },
     title: {
-      ES: 'Campaña Cyberpunk — Motion Graphics',
-      EN: 'Cyberpunk Campaign — Motion Graphics',
+      ES: 'Producción multimedia creativa y con pasión.',
+      EN: 'Creative and passionate multimedia production.',
     },
     description: {
-      ES: 'Cortes dinámicos de video de 15 segundos con efectos visuales retro-digitales, glitches sonoros y animaciones tipográficas agresivas pensadas para Instagram Reels y TikTok. Diseñados para generar impacto visual inmediato en el feed del usuario.',
-      EN: 'Dynamic 15-second video cuts featuring retro-digital visual effects, audio glitches, and high-impact typographic animations designed for Instagram Reels and TikTok. Engineered for maximum thumbs-stopping power in the feed.',
+      ES: 'Generemos juntos videos promocionales y corporativos que cautiven a la audiencia y transmitan la esencia del evento, como presentaciones multimedia o contenido para pantallas LED.',
+      EN: 'Let\'s generate promotional and corporate videos that captivate the audience and convey the essence of the event, such as multimedia presentations or LED screen content.',
     },
     testimonial: {
       name: 'Rodrigo Paz',

@@ -139,21 +139,8 @@ export default function ProjectSection({
     }
   };
 
-  // Split title helper to apply Artistic Flair text stroke to the last word
+  // Split title helper simplified to render solid text title without outline
   const renderSplitTitle = (title: string) => {
-    const words = title.split(' ');
-    if (words.length > 1) {
-      const mainPart = words.slice(0, -1).join(' ');
-      const lastWord = words[words.length - 1];
-      return (
-        <span className="block font-display text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95]">
-          {mainPart} <br />
-          <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>
-            {lastWord}
-          </span>
-        </span>
-      );
-    }
     return (
       <span className="block font-display text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95]">
         {title}
@@ -259,7 +246,7 @@ export default function ProjectSection({
           </div>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm md:text-base text-white/60 font-light leading-relaxed italic line-clamp-2 sm:line-clamp-none">
+          <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/60 font-light leading-relaxed italic line-clamp-2 sm:line-clamp-none">
             "{project.description[currentLang]}"
           </p>
 
