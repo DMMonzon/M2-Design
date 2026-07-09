@@ -104,6 +104,88 @@ export default function ProjectSection({
     }
   };
 
+  const getCtaLabels = (area: string) => {
+    switch (area) {
+      case 'apps':
+        return {
+          ES: {
+            primary: 'ver trabajos de App',
+            secondary: 'quiero una App'
+          },
+          EN: {
+            primary: 'see App work',
+            secondary: 'I want an App'
+          }
+        };
+      case 'web':
+        return {
+          ES: {
+            primary: 'ver trabajos de Web',
+            secondary: 'quiero una Web'
+          },
+          EN: {
+            primary: 'see Web work',
+            secondary: 'I want a Web'
+          }
+        };
+      case 'branding':
+        return {
+          ES: {
+            primary: 'ver trabajos de Branding',
+            secondary: 'quiero un Branding'
+          },
+          EN: {
+            primary: 'see Branding work',
+            secondary: 'I want Branding'
+          }
+        };
+      case 'textil':
+        return {
+          ES: {
+            primary: 'ver trabajos de Textil',
+            secondary: 'quiero un Textil'
+          },
+          EN: {
+            primary: 'see Textile work',
+            secondary: 'I want a Textile'
+          }
+        };
+      case 'graphic':
+        return {
+          ES: {
+            primary: 'ver trabajos de Gráfico',
+            secondary: 'quiero un Gráfico'
+          },
+          EN: {
+            primary: 'see Graphic work',
+            secondary: 'I want a Graphic'
+          }
+        };
+      case 'media':
+        return {
+          ES: {
+            primary: 'ver trabajos de Media',
+            secondary: 'quiero un Media'
+          },
+          EN: {
+            primary: 'see Media work',
+            secondary: 'I want Media'
+          }
+        };
+      default:
+        return {
+          ES: {
+            primary: 'ver trabajos',
+            secondary: 'quiero uno'
+          },
+          EN: {
+            primary: 'see work',
+            secondary: 'I want one'
+          }
+        };
+    }
+  };
+
   // Split title helper simplified to render solid text title without outline
   const renderSplitTitle = (title: string) => {
     return (
@@ -244,15 +326,29 @@ export default function ProjectSection({
             </div>
           </div>
 
-          {/* CTA "Quiero saber más" button matching Artistic Flair capsule button */}
-          <div>
+          {/* Action CTAs: Primary and Secondary styles */}
+          <div className="flex flex-row gap-3">
+            <button
+              onClick={() => window.open('https://behance.net/dmmonzon82', '_blank')}
+              className={`px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-black uppercase tracking-widest rounded-full shadow-md hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${
+                colors.text === 'text-cyber-pink'
+                  ? 'hover:bg-cyber-pink hover:text-white'
+                  : 'hover:bg-cyber-blue hover:text-white'
+              }`}
+              id={`cta-primary-${project.id}`}
+            >
+              {getCtaLabels(project.area)[currentLang].primary}
+            </button>
             <button
               onClick={scrollToContact}
-              className="bg-cyber-pink hover:bg-cyber-blue px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest flex items-center gap-2 sm:gap-3 group transition-all duration-300 shadow-lg text-white"
-              id={`cta-more-${project.id}`}
+              className={`px-4 py-2 sm:px-6 sm:py-3 font-black uppercase tracking-widest rounded-full hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${
+                colors.text === 'text-cyber-pink'
+                  ? 'bg-cyber-purple/20 border border-cyber-pink/30 text-white hover:border-cyber-pink hover:bg-cyber-pink hover:shadow-[0_0_20px_rgba(204,0,204,0.3)]'
+                  : 'bg-cyber-blue/10 border border-cyber-blue/30 text-white hover:border-cyber-blue hover:bg-cyber-blue hover:shadow-[0_0_20px_rgba(96,140,255,0.3)]'
+              }`}
+              id={`cta-secondary-${project.id}`}
             >
-              <span>{t.ctaMore}</span>
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
+              {getCtaLabels(project.area)[currentLang].secondary}
             </button>
           </div>
         </div>

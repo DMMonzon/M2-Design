@@ -31,7 +31,7 @@ export default function Hero({ currentLang }: HeroProps) {
 
       {/* Hero Visual Layout: Flexible Responsive Grid */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-4 sm:gap-6 lg:gap-12 pt-14 pb-4 lg:py-0">
-        
+
         {/* Left: Stunning Paint Explosion Render & Futuristic Wave (Image first) */}
         <div className="w-full lg:w-1/2 flex items-center justify-center relative select-none">
           {/* Subtle responsive placeholder image with high premium aesthetics */}
@@ -43,7 +43,7 @@ export default function Hero({ currentLang }: HeroProps) {
           >
             {/* Glowing background circles */}
             <div className="absolute inset-0 bg-gradient-to-tr from-cyber-pink/20 to-cyber-blue/20 rounded-full filter blur-3xl animate-pulse" />
-            
+
             {/* Absolute vector abstract paths (the wavy wireframes shown in the images) */}
             <svg
               className="absolute inset-0 w-full h-full opacity-40 animate-[spin_100s_linear_infinite]"
@@ -113,17 +113,6 @@ export default function Hero({ currentLang }: HeroProps) {
             </h1>
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-metrophobic text-xs sm:text-sm md:text-lg text-white/60 max-w-lg leading-relaxed font-light"
-          >
-            {currentLang === 'ES' 
-              ? 'Con un enfoque disruptivo y tecnologías de vanguardia, fusiono arte y código para crear experiencias memorables.'
-              : 'With a disruptive approach and cutting-edge technologies, I blend art and code to engineer memorable digital experiences.'}
-          </motion.p>
-
           {/* Action CTAs in Artistic Flair style */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -155,10 +144,10 @@ export default function Hero({ currentLang }: HeroProps) {
           {currentLang === 'ES' ? 'Deslizar para explorar' : 'Scroll to explore'}
         </span>
         <div className="w-5 h-8 rounded-full border border-white/20 p-1 flex justify-center">
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-1 h-1.5 bg-cyber-blue rounded-full" 
+            className="w-1 h-1.5 bg-cyber-blue rounded-full"
           />
         </div>
       </div>
