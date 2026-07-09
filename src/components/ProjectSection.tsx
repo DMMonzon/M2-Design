@@ -411,8 +411,8 @@ export default function ProjectSection({
           </div>
 
           {/* Description */}
-          <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/60 font-light leading-relaxed italic line-clamp-2 sm:line-clamp-none">
-            "{project.description[currentLang]}"
+          <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/80 font-normal leading-relaxed line-clamp-2 sm:line-clamp-none">
+            {project.description[currentLang]}
           </p>
 
           {/* User Opinion (Testimonial Card) - beautifully structured, stylized */}
