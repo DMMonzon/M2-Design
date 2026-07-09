@@ -82,11 +82,11 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
       <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between py-2 lg:py-0 gap-4">
         
         {/* Intro Section Header */}
-        <div className="text-center lg:text-left max-w-4xl space-y-1">
+        <div className="text-center lg:text-left w-full space-y-1">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black tracking-tighter text-white uppercase leading-none">
             {t.contactTitle} {t.contactSubtitle}
           </h2>
-          <p className="font-metrophobic text-xs sm:text-sm text-white/50 max-w-3xl leading-relaxed font-light italic">
+          <p className="font-metrophobic text-xs sm:text-sm text-white/50 w-full leading-relaxed font-light italic">
             "{t.contactIntro}"
           </p>
         </div>

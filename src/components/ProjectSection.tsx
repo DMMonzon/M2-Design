@@ -27,23 +27,23 @@ export default function ProjectSection({
   onShare,
 }: ProjectSectionProps) {
   const t = dict[currentLang];
-  
+
   // Local state for comments
   const [showComments, setShowComments] = useState(false);
   const [commentsList, setCommentsList] = useState<LocalComment[]>([
     {
       id: 'c1',
       author: currentLang === 'ES' ? 'Santi de Palermo' : 'Alex from NYC',
-      text: currentLang === 'ES' 
-        ? '¡Qué locura este laburo! El nivel de detalle es tremendo, che.' 
+      text: currentLang === 'ES'
+        ? '¡Qué locura este laburo! El nivel de detalle es tremendo, che.'
         : 'Incredible work! The level of detail is amazing.',
       time: '2h ago',
     },
     {
       id: 'c2',
       author: currentLang === 'ES' ? 'Clara G.' : 'Clara G.',
-      text: currentLang === 'ES' 
-        ? '¿Hacés mentorías? Me vuela la cabeza cómo usás la paleta de colores.' 
+      text: currentLang === 'ES'
+        ? '¿Hacés mentorías? Me vuela la cabeza cómo usás la paleta de colores.'
         : 'Do you offer mentorships? The way you use color palettes blows my mind.',
       time: '1d ago',
     }
@@ -239,23 +239,23 @@ export default function ProjectSection({
       case 'textil':
         return {
           ES: {
-            primary: 'ver trabajos de Textil',
-            secondary: 'quiero un Textil'
+            primary: 'ver trabajos de Diseño Textil',
+            secondary: 'quiero un Diseño Textil'
           },
           EN: {
-            primary: 'see Textile work',
-            secondary: 'I want a Textile'
+            primary: 'see Textile Design work',
+            secondary: 'I want a Textile Design'
           }
         };
       case 'graphic':
         return {
           ES: {
-            primary: 'ver trabajos de Gráfico',
-            secondary: 'quiero un Gráfico'
+            primary: 'ver trabajos de Diseño Gráfico',
+            secondary: 'quiero un Diseño Gráfico'
           },
           EN: {
-            primary: 'see Graphic work',
-            secondary: 'I want a Graphic'
+            primary: 'see Graphic Design work',
+            secondary: 'I want a Graphic Design'
           }
         };
       case 'media':
@@ -302,7 +302,7 @@ export default function ProjectSection({
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr ${colors.bg} rounded-full filter blur-[180px] opacity-20 pointer-events-none z-0`} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col lg:flex-row items-center justify-between gap-3 py-4 lg:py-0">
-        
+
         {/* Left: Beautiful Design Asset Thumbnail Panel */}
         <div className="w-full lg:w-[50%] flex flex-col justify-between gap-3 select-none">
           <div
@@ -384,13 +384,12 @@ export default function ProjectSection({
                   <button
                     key={ex.id}
                     onClick={() => setActiveExampleIndex(idx)}
-                    className={`px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider rounded-lg border transition-all duration-300 ${
-                      isActive
+                    className={`px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider rounded-lg border transition-all duration-300 ${isActive
                         ? colors.text === 'text-cyber-pink'
                           ? 'bg-cyber-pink/20 border-cyber-pink text-white font-bold'
                           : 'bg-cyber-blue/20 border-cyber-blue text-white font-bold'
                         : 'bg-black/40 border-white/10 text-white/50 hover:border-white/30 hover:text-white'
-                    }`}
+                      }`}
                   >
                     {ex.title[currentLang]}
                   </button>
@@ -449,22 +448,20 @@ export default function ProjectSection({
           <div className="flex flex-row gap-3">
             <button
               onClick={() => window.open('https://behance.net/dmmonzon82', '_blank')}
-              className={`px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-black uppercase tracking-widest rounded-full shadow-md hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${
-                colors.text === 'text-cyber-pink'
+              className={`px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-black uppercase tracking-widest rounded-full shadow-md hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${colors.text === 'text-cyber-pink'
                   ? 'hover:bg-cyber-pink hover:text-white'
                   : 'hover:bg-cyber-blue hover:text-white'
-              }`}
+                }`}
               id={`cta-primary-${project.id}`}
             >
               {getCtaLabels(project.area)[currentLang].primary}
             </button>
             <button
               onClick={scrollToContact}
-              className={`px-4 py-2 sm:px-6 sm:py-3 font-black uppercase tracking-widest rounded-full hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${
-                colors.text === 'text-cyber-pink'
+              className={`px-4 py-2 sm:px-6 sm:py-3 font-black uppercase tracking-widest rounded-full hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${colors.text === 'text-cyber-pink'
                   ? 'bg-cyber-purple/20 border border-cyber-pink/30 text-white hover:border-cyber-pink hover:bg-cyber-pink hover:shadow-[0_0_20px_rgba(204,0,204,0.3)]'
                   : 'bg-cyber-blue/10 border border-cyber-blue/30 text-white hover:border-cyber-blue hover:bg-cyber-blue hover:shadow-[0_0_20px_rgba(96,140,255,0.3)]'
-              }`}
+                }`}
               id={`cta-secondary-${project.id}`}
             >
               {getCtaLabels(project.area)[currentLang].secondary}
@@ -577,13 +574,13 @@ export default function ProjectSection({
               <div className="mx-auto w-12 h-12 rounded-full bg-cyber-blue/10 flex items-center justify-center border border-cyber-blue/20">
                 <Send className="w-5 h-5 text-cyber-blue" />
               </div>
-              
+
               <div className="space-y-1">
                 <h3 className="font-display text-base font-bold text-white uppercase tracking-wider">
                   {currentLang === 'ES' ? 'Validación Antispam' : 'Antispam Validation'}
                 </h3>
                 <p className="font-metrophobic text-xs text-white/60">
-                  {currentLang === 'ES' 
+                  {currentLang === 'ES'
                     ? 'Ingresa tu email para registrar tu interacción y validar que no eres un robot.'
                     : 'Please enter your email to register your interaction and verify you are not a bot.'}
                 </p>
@@ -598,7 +595,7 @@ export default function ProjectSection({
                   onChange={(e) => setEmailInput(e.target.value)}
                   className="w-full bg-[#12121e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-cyber-blue text-center"
                 />
-                
+
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -613,9 +610,8 @@ export default function ProjectSection({
                   </button>
                   <button
                     type="submit"
-                    className={`flex-1 py-2 rounded-lg text-xs font-black uppercase text-black ${
-                      colors.text === 'text-cyber-pink' ? 'bg-cyber-pink hover:bg-cyber-pink/90' : 'bg-cyber-blue hover:bg-cyber-blue/90'
-                    } transition-colors`}
+                    className={`flex-1 py-2 rounded-lg text-xs font-black uppercase text-black ${colors.text === 'text-cyber-pink' ? 'bg-cyber-pink hover:bg-cyber-pink/90' : 'bg-cyber-blue hover:bg-cyber-blue/90'
+                      } transition-colors`}
                   >
                     {currentLang === 'ES' ? 'Validar' : 'Validate'}
                   </button>
