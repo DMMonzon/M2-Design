@@ -1,5 +1,14 @@
 export type Language = 'ES' | 'EN';
 
+export interface SubWork {
+  id: string;
+  image: string;
+  title: { ES: string; EN: string };
+  likes: number;
+  commentsCount: number;
+  shares: number;
+}
+
 export interface Project {
   id: string;
   area: 'apps' | 'web' | 'graphic' | 'textil' | 'branding' | 'media';
@@ -16,6 +25,7 @@ export interface Project {
   likes: number;
   commentsCount: number;
   shares: number;
+  examples: SubWork[];
 }
 
 export interface SkillItem {

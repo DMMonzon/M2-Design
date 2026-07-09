@@ -20,12 +20,38 @@ export const projectsData: Project[] = [
         ES: 'Martín entendió al toque lo que queríamos transmitir. El diseño no solo es hermoso sino que la tasa de conversión subió un 35% desde que implementamos su prototipo.',
         EN: 'Martín immediately understood what we wanted to convey. The design is not only beautiful, but the conversion rate jumped 35% since implementing his prototype.',
       },
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&h=120&q=80',
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1200&h=800&q=80',
     },
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&h=800&q=80',
     likes: 254,
     commentsCount: 42,
     shares: 89,
+    examples: [
+      {
+        id: 'apps-ex-1',
+        title: { ES: 'Fintech Wallet', EN: 'Fintech Wallet' },
+        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 254,
+        commentsCount: 42,
+        shares: 89,
+      },
+      {
+        id: 'apps-ex-2',
+        title: { ES: 'Delivery Express App', EN: 'Delivery Express App' },
+        image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 198,
+        commentsCount: 31,
+        shares: 55,
+      },
+      {
+        id: 'apps-ex-3',
+        title: { ES: 'Social Connect', EN: 'Social Connect' },
+        image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 310,
+        commentsCount: 55,
+        shares: 72,
+      }
+    ]
   },
   {
     id: 'proj-web',
@@ -52,6 +78,32 @@ export const projectsData: Project[] = [
     likes: 312,
     commentsCount: 56,
     shares: 112,
+    examples: [
+      {
+        id: 'web-ex-1',
+        title: { ES: 'E-commerce Space', EN: 'E-commerce Space' },
+        image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 312,
+        commentsCount: 56,
+        shares: 112,
+      },
+      {
+        id: 'web-ex-2',
+        title: { ES: 'Agencia Digital Creative', EN: 'Digital Creative Agency' },
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 245,
+        commentsCount: 38,
+        shares: 94,
+      },
+      {
+        id: 'web-ex-3',
+        title: { ES: 'SaaS Platform Dashboard', EN: 'SaaS Platform Dashboard' },
+        image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 403,
+        commentsCount: 72,
+        shares: 145,
+      }
+    ]
   },
   {
     id: 'proj-branding',
@@ -78,6 +130,32 @@ export const projectsData: Project[] = [
     likes: 298,
     commentsCount: 39,
     shares: 74,
+    examples: [
+      {
+        id: 'branding-ex-1',
+        title: { ES: 'Identidad Neon Studio', EN: 'Neon Studio Identity' },
+        image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 298,
+        commentsCount: 39,
+        shares: 74,
+      },
+      {
+        id: 'branding-ex-2',
+        title: { ES: 'Cosméticos Eco Care', EN: 'Eco Care Cosmetics' },
+        image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 221,
+        commentsCount: 28,
+        shares: 61,
+      },
+      {
+        id: 'branding-ex-3',
+        title: { ES: 'Café de Especialidad M2', EN: 'M2 Specialty Coffee' },
+        image: 'https://images.unsplash.com/photo-1606857521015-7f9fcf423740?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 342,
+        commentsCount: 45,
+        shares: 88,
+      }
+    ]
   },
   {
     id: 'proj-textil',
@@ -104,6 +182,32 @@ export const projectsData: Project[] = [
     likes: 421,
     commentsCount: 88,
     shares: 201,
+    examples: [
+      {
+        id: 'textil-ex-1',
+        title: { ES: 'Sport Wear Collection', EN: 'Sport Wear Collection' },
+        image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 421,
+        commentsCount: 88,
+        shares: 201,
+      },
+      {
+        id: 'textil-ex-2',
+        title: { ES: 'Streetwear Capsule', EN: 'Streetwear Capsule' },
+        image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 310,
+        commentsCount: 64,
+        shares: 154,
+      },
+      {
+        id: 'textil-ex-3',
+        title: { ES: 'Eco Cotton Drop', EN: 'Eco Cotton Drop' },
+        image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 289,
+        commentsCount: 49,
+        shares: 110,
+      }
+    ]
   },
   {
     id: 'proj-graphic',
@@ -130,6 +234,32 @@ export const projectsData: Project[] = [
     likes: 187,
     commentsCount: 29,
     shares: 45,
+    examples: [
+      {
+        id: 'graphic-ex-1',
+        title: { ES: 'Revista Cultural G1', EN: 'G1 Cultural Magazine' },
+        image: 'https://images.unsplash.com/photo-1561070791-26c113006238?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 187,
+        commentsCount: 29,
+        shares: 45,
+      },
+      {
+        id: 'graphic-ex-2',
+        title: { ES: 'Banner Editorial Pro', EN: 'Editorial Pro Banner' },
+        image: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 156,
+        commentsCount: 21,
+        shares: 38,
+      },
+      {
+        id: 'graphic-ex-3',
+        title: { ES: 'Afiches de Conciertos', EN: 'Concert Posters' },
+        image: 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 212,
+        commentsCount: 35,
+        shares: 50,
+      }
+    ]
   },
   {
     id: 'proj-media',
@@ -156,6 +286,32 @@ export const projectsData: Project[] = [
     likes: 356,
     commentsCount: 61,
     shares: 110,
+    examples: [
+      {
+        id: 'media-ex-1',
+        title: { ES: 'Video Promocional Festival', EN: 'Festival Promotional Video' },
+        image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 356,
+        commentsCount: 61,
+        shares: 110,
+      },
+      {
+        id: 'media-ex-2',
+        title: { ES: 'Intro Animada Cyber', EN: 'Cyber Animated Intro' },
+        image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 284,
+        commentsCount: 42,
+        shares: 75,
+      },
+      {
+        id: 'media-ex-3',
+        title: { ES: 'LED Screen Motion Visuals', EN: 'LED Screen Motion Visuals' },
+        image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 412,
+        commentsCount: 78,
+        shares: 130,
+      }
+    ]
   }
 ];
 

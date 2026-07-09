@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Project, Language } from '../types';
 import { dict } from '../data';
 import { Heart, Share2, MessageSquare, ArrowRight, Send, X } from 'lucide-react';
@@ -51,6 +51,26 @@ export default function ProjectSection({
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
 
+  // Carousel/Tabs system states
+  const [activeExampleIndex, setActiveExampleIndex] = useState(0);
+  const [examples, setExamples] = useState(project.examples);
+
+  // Auto rotation effect (every 2 seconds)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveExampleIndex((prev) => (prev + 1) % project.examples.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [project.examples.length]);
+
+  // Antispam states
+  const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [pendingAction, setPendingAction] = useState<'like' | 'share' | 'comment' | null>(null);
+  const [likedExampleIds, setLikedExampleIds] = useState<string[]>([]);
+  const [pendingComment, setPendingComment] = useState<{ author: string; text: string } | null>(null);
+
   // Assign color scheme based on project area (only magenta and blue families)
   const getColors = (area: string) => {
     switch (area) {
@@ -80,21 +100,96 @@ export default function ProjectSection({
 
   const colors = getColors(project.area);
 
+  const executeAction = (action: 'like' | 'share' | 'comment', verifiedMail?: string) => {
+    const currentWork = examples[activeExampleIndex];
+    if (action === 'like') {
+      if (likedExampleIds.includes(currentWork.id)) return; // already liked
+      setLikedExampleIds((prev) => [...prev, currentWork.id]);
+      setExamples((prev) =>
+        prev.map((ex, idx) =>
+          idx === activeExampleIndex ? { ...ex, likes: ex.likes + 1 } : ex
+        )
+      );
+    } else if (action === 'share') {
+      setExamples((prev) =>
+        prev.map((ex, idx) =>
+          idx === activeExampleIndex ? { ...ex, shares: ex.shares + 1 } : ex
+        )
+      );
+      // Copy URL to clipboard
+      navigator.clipboard.writeText(`${window.location.origin}/#${project.id}?work=${currentWork.id}`);
+      onShare(currentWork.title[currentLang]);
+    } else if (action === 'comment') {
+      setShowComments(true);
+    }
+  };
+
+  const handleActionClick = (action: 'like' | 'share' | 'comment') => {
+    if (!verifiedEmail) {
+      setPendingAction(action);
+      setShowEmailModal(true);
+    } else {
+      executeAction(action);
+    }
+  };
+
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailInput || !/\S+@\S+\.\S+/.test(emailInput)) return;
+
+    setVerifiedEmail(emailInput);
+    setShowEmailModal(false);
+
+    if (pendingAction) {
+      if (pendingAction === 'comment' && pendingComment) {
+        const nickname = pendingComment.author.trim() || (currentLang === 'ES' ? 'Anónimo' : 'Anonymous');
+        const newComment: LocalComment = {
+          id: `comment-${Date.now()}`,
+          author: nickname,
+          text: pendingComment.text.trim(),
+          time: currentLang === 'ES' ? 'Ahora' : 'Just now',
+        };
+        setCommentsList([newComment, ...commentsList]);
+        setExamples((prev) =>
+          prev.map((ex, idx) =>
+            idx === activeExampleIndex ? { ...ex, commentsCount: ex.commentsCount + 1 } : ex
+          )
+        );
+        setPendingComment(null);
+        setShowComments(true);
+      } else {
+        executeAction(pendingAction, emailInput);
+      }
+      setPendingAction(null);
+    }
+    setEmailInput('');
+  };
+
   const handlePostComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCommentText.trim()) return;
 
-    const author = newCommentAuthor.trim() || (currentLang === 'ES' ? 'Anónimo' : 'Anonymous');
-    const newComment: LocalComment = {
-      id: `comment-${Date.now()}`,
-      author,
-      text: newCommentText.trim(),
-      time: currentLang === 'ES' ? 'Ahora' : 'Just now',
-    };
-
-    setCommentsList([newComment, ...commentsList]);
-    setNewCommentText('');
-    setNewCommentAuthor('');
+    if (!verifiedEmail) {
+      setPendingComment({ author: newCommentAuthor, text: newCommentText });
+      setPendingAction('comment');
+      setShowEmailModal(true);
+    } else {
+      const nickname = newCommentAuthor.trim() || (currentLang === 'ES' ? 'Anónimo' : 'Anonymous');
+      const newComment: LocalComment = {
+        id: `comment-${Date.now()}`,
+        author: nickname,
+        text: newCommentText.trim(),
+        time: currentLang === 'ES' ? 'Ahora' : 'Just now',
+      };
+      setCommentsList([newComment, ...commentsList]);
+      setExamples((prev) =>
+        prev.map((ex, idx) =>
+          idx === activeExampleIndex ? { ...ex, commentsCount: ex.commentsCount + 1 } : ex
+        )
+      );
+      setNewCommentText('');
+      setNewCommentAuthor('');
+    }
   };
 
   const scrollToContact = () => {
@@ -217,67 +312,84 @@ export default function ProjectSection({
 
             {/* Main project high res mockup */}
             <img
-              src={project.image}
-              alt={project.title[currentLang]}
+              src={examples[activeExampleIndex].image}
+              alt={examples[activeExampleIndex].title[currentLang]}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               id={`image-${project.id}`}
             />
 
             {/* Glowing visual tag overlay */}
-            <div className="absolute top-6 left-6 px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-mono tracking-widest text-white uppercase">
+            <div className="absolute top-6 left-6 px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-mono tracking-widest text-white uppercase z-10">
               {project.areaLabel[currentLang]}
+            </div>
+
+            {/* Right-aligned overlay action panel visible on hover */}
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
+              {/* Like Icon */}
+              <button
+                onClick={() => handleActionClick('like')}
+                className="w-10 h-10 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center text-white hover:border-cyber-pink hover:scale-110 active:scale-95 transition-all shadow-xl"
+                title="Like"
+              >
+                <Heart className={`w-4 h-4 ${likedExampleIds.includes(examples[activeExampleIndex].id) ? 'text-cyber-pink fill-cyber-pink' : 'text-white/60'}`} />
+                <span className="text-[8px] font-mono font-bold mt-0.5">{examples[activeExampleIndex].likes}</span>
+              </button>
+
+              {/* Share Icon */}
+              <button
+                onClick={() => handleActionClick('share')}
+                className="w-10 h-10 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center text-white hover:border-cyber-blue hover:scale-110 active:scale-95 transition-all shadow-xl"
+                title="Share"
+              >
+                <Share2 className="w-4 h-4 text-white/60" />
+                <span className="text-[8px] font-mono font-bold mt-0.5">{examples[activeExampleIndex].shares}</span>
+              </button>
+
+              {/* Comments/Sms Icon */}
+              <button
+                onClick={() => handleActionClick('comment')}
+                className="w-10 h-10 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center text-white hover:border-cyber-blue hover:scale-110 active:scale-95 transition-all shadow-xl"
+                title="Comment"
+              >
+                <MessageSquare className="w-4 h-4 text-white/60" />
+                <span className="text-[8px] font-mono font-bold mt-0.5">{examples[activeExampleIndex].commentsCount}</span>
+              </button>
             </div>
           </div>
 
-          {/* Social Reaction Deck - Replicating Artistic Flair Button Boxes */}
-          <div className="mt-4 flex items-center justify-between px-2">
-            <div className="flex items-center space-x-4">
-              {/* Like Button */}
-              <button
-                onClick={() => onLikeToggle(project.id)}
-                className="flex items-center gap-2 hover:text-cyber-pink transition-colors group"
-                id={`like-${project.id}`}
-              >
-                <div className={`w-6 h-6 border ${isLiked ? 'border-cyber-pink bg-cyber-pink/20 text-cyber-pink' : 'border-white/20 text-white/50'} rounded flex items-center justify-center text-[10px] group-hover:scale-110 transition-transform`}>
-                  ♥
-                </div>
-                <span className={`text-[10px] font-bold tracking-wider ${isLiked ? 'text-cyber-pink' : 'text-white/60'}`}>
-                  {project.likes + (isLiked ? 1 : 0)}
-                </span>
-              </button>
-
-              {/* Comment trigger */}
-              <button
-                onClick={() => setShowComments(true)}
-                className="flex items-center gap-2 hover:text-cyber-blue transition-colors group"
-                id={`comment-trigger-${project.id}`}
-              >
-                <div className="w-6 h-6 border border-white/20 text-white/50 rounded flex items-center justify-center text-[10px] group-hover:scale-110 transition-transform">
-                  💬
-                </div>
-                <span className="text-[10px] font-bold tracking-wider text-white/60">
-                  {project.commentsCount + (commentsList.length - 2)}
-                </span>
-              </button>
-
-              {/* Share button */}
-              <button
-                onClick={() => onShare(project.title[currentLang])}
-                className="flex items-center gap-2 hover:text-cyber-blue transition-colors group"
-                id={`share-${project.id}`}
-              >
-                <div className="w-6 h-6 border border-white/20 text-white/50 rounded flex items-center justify-center text-[10px] group-hover:scale-110 transition-transform">
-                  ↗
-                </div>
-                <span className="text-[10px] font-bold tracking-wider text-white/60">Share</span>
-              </button>
+          {/* Carousel Solapas & Detail Button */}
+          <div className="mt-2 flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
+            {/* Solapas (Tabs) */}
+            <div className="flex items-center space-x-2 flex-wrap gap-y-2">
+              {examples.map((ex, idx) => {
+                const isActive = idx === activeExampleIndex;
+                return (
+                  <button
+                    key={ex.id}
+                    onClick={() => setActiveExampleIndex(idx)}
+                    className={`px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider rounded-lg border transition-all duration-300 ${
+                      isActive
+                        ? colors.text === 'text-cyber-pink'
+                          ? 'bg-cyber-pink/20 border-cyber-pink text-white font-bold'
+                          : 'bg-cyber-blue/20 border-cyber-blue text-white font-bold'
+                        : 'bg-black/40 border-white/10 text-white/50 hover:border-white/30 hover:text-white'
+                    }`}
+                  >
+                    {ex.title[currentLang]}
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Tiny technical detail label - hidden on mobile */}
-            <span className="hidden sm:inline-block text-[9px] font-mono text-white/30 tracking-widest uppercase">
-              [ REF: {project.id.toUpperCase()} ]
-            </span>
+            {/* Detail Access Button */}
+            <button
+              onClick={() => alert(currentLang === 'ES' ? 'El detalle del trabajo se creará en una etapa posterior.' : 'Work detail page will be created in a later stage.')}
+              className="px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest rounded-lg border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 shrink-0"
+            >
+              <span>{currentLang === 'ES' ? 'Ver Detalle' : 'View Detail'}</span>
+              <ArrowRight className="w-3 h-3" />
+            </button>
           </div>
         </div>
 
@@ -432,6 +544,73 @@ export default function ProjectSection({
                     id={`comment-submit-${project.id}`}
                   >
                     <Send className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Email Spam Validation Modal */}
+      <AnimatePresence>
+        {showEmailModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/85 backdrop-blur-md z-45 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 10 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 10 }}
+              className="bg-[#0a0a10] border border-white/15 w-full max-w-sm rounded-2xl p-6 shadow-2xl space-y-4 text-center"
+            >
+              <div className="mx-auto w-12 h-12 rounded-full bg-cyber-blue/10 flex items-center justify-center border border-cyber-blue/20">
+                <Send className="w-5 h-5 text-cyber-blue" />
+              </div>
+              
+              <div className="space-y-1">
+                <h3 className="font-display text-base font-bold text-white uppercase tracking-wider">
+                  {currentLang === 'ES' ? 'Validación Antispam' : 'Antispam Validation'}
+                </h3>
+                <p className="font-metrophobic text-xs text-white/60">
+                  {currentLang === 'ES' 
+                    ? 'Ingresa tu email para registrar tu interacción y validar que no eres un robot.'
+                    : 'Please enter your email to register your interaction and verify you are not a bot.'}
+                </p>
+              </div>
+
+              <form onSubmit={handleEmailSubmit} className="space-y-3">
+                <input
+                  type="email"
+                  required
+                  placeholder={currentLang === 'ES' ? 'ejemplo@correo.com' : 'you@example.com'}
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  className="w-full bg-[#12121e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-cyber-blue text-center"
+                />
+                
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowEmailModal(false);
+                      setPendingAction(null);
+                      setEmailInput('');
+                    }}
+                    className="flex-1 py-2 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-white hover:bg-white/10 transition-colors"
+                  >
+                    {currentLang === 'ES' ? 'Cancelar' : 'Cancel'}
+                  </button>
+                  <button
+                    type="submit"
+                    className={`flex-1 py-2 rounded-lg text-xs font-black uppercase text-black ${
+                      colors.text === 'text-cyber-pink' ? 'bg-cyber-pink hover:bg-cyber-pink/90' : 'bg-cyber-blue hover:bg-cyber-blue/90'
+                    } transition-colors`}
+                  >
+                    {currentLang === 'ES' ? 'Validar' : 'Validate'}
                   </button>
                 </div>
               </form>
