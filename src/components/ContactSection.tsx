@@ -79,35 +79,33 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
       <div className="absolute top-12 left-12 w-[300px] h-[300px] bg-cyber-blue/5 rounded-full filter blur-[100px] pointer-events-none z-0" />
 
       {/* Main Form + Info Layout */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between py-4 lg:py-0 gap-3">
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between py-2 lg:py-0 gap-4">
         
         {/* Intro Section Header */}
-        <div className="text-center lg:text-left max-w-4xl space-y-1 sm:space-y-2">
+        <div className="text-center lg:text-left max-w-4xl space-y-1">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black tracking-tighter text-white uppercase leading-none">
             {t.contactTitle} {t.contactSubtitle}
           </h2>
-          <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/50 max-w-3xl leading-relaxed font-light italic">
+          <p className="font-metrophobic text-xs sm:text-sm text-white/50 max-w-3xl leading-relaxed font-light italic">
             "{t.contactIntro}"
           </p>
         </div>
 
-        {/* Content Cards Layout */}
-        <div className="flex flex-col gap-4 lg:gap-5 flex-1 justify-center">
+        {/* Content Cards Layout: 3 Columns side-by-side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1 justify-center py-2">
           
-          {/* Top Row: Sobre Mí (Left) & Tecnologías Aplicadas (Right) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-            
-            {/* Card 1: Sobre mí */}
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xl hover:border-white/20 transition-all flex flex-col justify-center">
-              <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// ABOUT ME</span>
-              <h3 className="text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em] mb-3 sm:mb-4">
-                {t.aboutMe}
-              </h3>
+          {/* Card 1: Sobre mí (Cols: 3) - White background, black text */}
+          <div className="lg:col-span-3 bg-white text-zinc-950 rounded-2xl p-5 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between border border-zinc-200">
+            <div>
+              <div className="flex items-center justify-between border-b border-zinc-100 pb-3 mb-4">
+                <span className="text-[10px] font-bold tracking-widest text-zinc-800 uppercase">Sobre mí</span>
+                <span className="text-[9px] font-mono text-zinc-400 tracking-wider">// ABOUT ME</span>
+              </div>
 
-              <div className="flex flex-row items-center gap-4 sm:gap-6">
-                {/* Avatar matching rotated NP avatar container */}
+              <div className="flex flex-row items-center gap-3.5 mb-4">
+                {/* Avatar */}
                 <div className="relative shrink-0 select-none">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-zinc-800 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-300">
+                  <div className="w-14 h-14 bg-zinc-100 rounded-2xl overflow-hidden border border-zinc-200 rotate-3 hover:rotate-0 transition-transform duration-300">
                     <img
                       src={contactDetails.avatar}
                       alt={contactDetails.name}
@@ -118,57 +116,59 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
                   </div>
                 </div>
 
-                <div className="space-y-2 text-left flex-1">
-                  <div>
-                    <h4 className="font-display font-black text-sm sm:text-base text-white tracking-tight uppercase">{contactDetails.name}</h4>
-                    <span className="text-[9px] text-white/40 uppercase tracking-widest block mt-0.5">
-                      {contactDetails.age} {t.yearsOld} <span className="text-cyber-blue">•</span> {contactDetails.phrase[currentLang]}
-                    </span>
-                  </div>
-
-                  {/* Skills/Conocimientos */}
-                  <div className="space-y-1 text-left">
-                    <span className="block text-[8px] font-mono tracking-widest text-white/35 uppercase">
-                      {t.knowledge}
-                    </span>
-                    <ul className="grid grid-cols-2 gap-1">
-                      {skillsList.map((skill, index) => (
-                        <li key={index} className="flex items-center space-x-1 text-[10px] text-white/80 font-light">
-                          {renderIcon(skill.iconName, 'w-2.5 h-2.5 text-cyber-pink shrink-0')}
-                          <span className="truncate">{skill.name[currentLang]}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="text-left">
+                  <h4 className="font-display font-black text-sm sm:text-base text-zinc-900 tracking-tight uppercase leading-tight">{contactDetails.name}</h4>
+                  <span className="text-[9px] text-zinc-500 uppercase tracking-widest block mt-0.5">
+                    {contactDetails.age} {t.yearsOld}
+                  </span>
+                  <span className="text-[9px] text-zinc-500 italic block mt-0.5 font-metrophobic">
+                    {contactDetails.phrase[currentLang]}
+                  </span>
                 </div>
               </div>
+
+              {/* Skills/Conocimientos */}
+              <div className="space-y-2 text-left border-t border-zinc-100 pt-3">
+                <span className="block text-[9px] font-mono font-bold tracking-widest text-zinc-400 uppercase">
+                  Conocimientos adquiridos
+                </span>
+                <ul className="space-y-1.5">
+                  {skillsList.map((skill, index) => (
+                    <li key={index} className="flex items-center space-x-2 text-xs text-zinc-700 font-medium">
+                      {renderIcon(skill.iconName, 'w-3.5 h-3.5 text-zinc-900 shrink-0')}
+                      <span className="truncate">{skill.name[currentLang]}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
+          </div>
 
-            {/* Card 2: Tecnologías */}
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xl hover:border-white/20 transition-all flex flex-col justify-center">
-              <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// TECH STACK</span>
-              <h3 className="text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em] mb-3 sm:mb-4">
-                {t.technologies}
-              </h3>
+          {/* Card 2: Tecnologías (Cols: 3) - White background, black text */}
+          <div className="lg:col-span-3 bg-white text-zinc-950 rounded-2xl p-5 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between border border-zinc-200">
+            <div>
+              <div className="flex items-center justify-between border-b border-zinc-100 pb-3 mb-4">
+                <span className="text-[10px] font-bold tracking-widest text-zinc-800 uppercase">Tecnologías aplicadas</span>
+                <span className="text-[9px] font-mono text-zinc-400 tracking-wider">// TECH STACK</span>
+              </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="space-y-1.5 text-left">
                 {technologiesList.map((tech, index) => (
                   <div 
                     key={index} 
-                    className="flex items-center space-x-1.5 p-1.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-colors"
+                    className="flex items-center space-x-2 p-1 text-zinc-700 font-medium"
                   >
-                    {renderIcon(tech.iconName, 'w-2.5 h-2.5 text-cyber-blue shrink-0')}
-                    <span className="text-[9px] text-white/80 font-mono truncate">{tech.name}</span>
+                    {renderIcon(tech.iconName, 'w-3.5 h-3.5 text-zinc-900 shrink-0')}
+                    <span className="text-[11px] font-mono truncate">{tech.name}</span>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
 
-          {/* Bottom Row: Contact Form */}
-          <div className="w-full relative">
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-5 md:p-6 relative overflow-hidden shadow-2xl">
+          {/* Card 3: Formulario de Contacto (Cols: 6) - Dark background, white inputs */}
+          <div className="lg:col-span-6 w-full relative">
+            <div className="bg-[#0f0f15] border border-white/10 rounded-2xl p-5 md:p-6 relative overflow-hidden shadow-2xl h-full flex flex-col justify-center">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyber-blue/10 to-transparent rounded-bl-full pointer-events-none" />
 
               {/* Success Alert Banner overlay */}
@@ -192,61 +192,51 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
                 )}
               </AnimatePresence>
 
-              {/* Actual Form */}
+              {/* Actual Form - White background inputs like mock image */}
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Name Input */}
-                  <div className="space-y-1 text-left">
-                    <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                      {t.formName}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formName}
-                      onChange={(e) => setFormName(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20"
-                      placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
-                      id="contact-name-input"
-                    />
-                  </div>
+                {/* Name Input */}
+                <div className="text-left">
+                  <input
+                    type="text"
+                    required
+                    value={formName}
+                    onChange={(e) => setFormName(e.target.value)}
+                    className="w-full bg-white text-zinc-900 rounded-lg py-2.5 px-3.5 text-sm focus:outline-none placeholder-zinc-400 border border-zinc-200"
+                    placeholder={currentLang === 'ES' ? 'Nombre y Apellido' : 'Full Name'}
+                    id="contact-name-input"
+                  />
+                </div>
 
-                  {/* Email Input */}
-                  <div className="space-y-1 text-left">
-                    <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                      {t.formEmail}
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formEmail}
-                      onChange={(e) => setFormEmail(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20"
-                      placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
-                      id="contact-email-input"
-                    />
-                  </div>
+                {/* Email Input */}
+                <div className="text-left">
+                  <input
+                    type="email"
+                    required
+                    value={formEmail}
+                    onChange={(e) => setFormEmail(e.target.value)}
+                    className="w-full bg-white text-zinc-900 rounded-lg py-2.5 px-3.5 text-sm focus:outline-none placeholder-zinc-400 border border-zinc-200"
+                    placeholder={currentLang === 'ES' ? 'E-mail' : 'Email Address'}
+                    id="contact-email-input"
+                  />
                 </div>
 
                 {/* Message Textarea */}
-                <div className="space-y-1 text-left">
-                  <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                    {t.formMessage}
-                  </label>
+                <div className="text-left">
                   <textarea
                     required
-                    rows={2}
+                    rows={4}
                     value={formMessage}
                     onChange={(e) => setFormMessage(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 resize-none"
-                    placeholder={currentLang === 'ES' ? '¿Qué tenés en mente?' : 'What do you have in mind?'}
+                    className="w-full bg-white text-zinc-900 rounded-lg py-2.5 px-3.5 text-sm focus:outline-none placeholder-zinc-400 border border-zinc-200 resize-none font-sans"
+                    placeholder={currentLang === 'ES' ? 'Mensaje' : 'Message'}
                     id="contact-message-input"
                   />
                 </div>
 
+                {/* Submit button styled exactly like the mock image */}
                 <button
                   type="submit"
-                  className="w-full py-2 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 shadow-md cursor-pointer"
+                  className="border border-white bg-transparent text-white px-6 py-2.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 self-start cursor-pointer active:scale-95"
                   id="contact-submit-btn"
                 >
                   {t.formSubmit}
@@ -255,6 +245,59 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
             </div>
           </div>
 
+        </div>
+
+        {/* Footer/Contact Info Bar - Black strip at the bottom */}
+        <div className="w-full flex flex-row flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-14 py-3 bg-black/60 border border-white/10 rounded-xl mt-2 select-none shadow-lg">
+          {/* Behance */}
+          <a
+            href="https://behance.net/dmmonzon82"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center font-bold text-sm text-white group-hover:bg-zinc-700 transition-colors">
+              Bē
+            </div>
+            <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wide">@dmmonzon82</span>
+          </a>
+
+          {/* LinkedIn */}
+          <a
+            href="https://linkedin.com/in/DiegoMartinMonzon"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-zinc-700 transition-colors">
+              <Linkedin className="w-4 h-4" />
+            </div>
+            <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wide">DiegoMartinMonzon</span>
+          </a>
+
+          {/* Phone */}
+          <a
+            href="https://wa.me/5491165298800"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-zinc-700 transition-colors">
+              <Phone className="w-4 h-4" />
+            </div>
+            <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wide">+54 9 (011) 15 6529 8800</span>
+          </a>
+
+          {/* Email */}
+          <a
+            href="mailto:dmmonzon82@gmail.com"
+            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-zinc-700 transition-colors">
+              <Mail className="w-4 h-4" />
+            </div>
+            <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wide">dmmonzon82@gmail.com</span>
+          </a>
         </div>
 
       </div>
