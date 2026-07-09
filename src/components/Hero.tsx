@@ -20,7 +20,7 @@ export default function Hero({ currentLang }: HeroProps) {
   return (
     <section
       id="hero"
-      className="snap-section min-h-screen relative flex items-center justify-center overflow-hidden bg-[#050505] pt-16 md:pt-0"
+      className="snap-section min-h-screen relative flex items-center justify-center overflow-hidden bg-[#050505] pt-12 md:pt-0"
     >
       {/* Grid Overlay for futuristic matrix texture */}
       <div className="absolute inset-0 grid-overlay opacity-30 z-0 pointer-events-none" />
@@ -30,7 +30,7 @@ export default function Hero({ currentLang }: HeroProps) {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyber-blue/10 rounded-full filter blur-[150px] pointer-events-none" />
 
       {/* Hero Visual Layout: Flexible Responsive Grid */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-4 sm:gap-6 lg:gap-12 pt-20 pb-4 lg:py-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-4 sm:gap-6 lg:gap-12 pt-14 pb-4 lg:py-0">
         
         {/* Left: Text & CTA */}
         <div className="w-full lg:w-1/2 flex flex-col text-left space-y-3 sm:space-y-4 lg:space-y-6">

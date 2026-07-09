@@ -25,8 +25,8 @@ export default function Header({
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-[#050505]/90 backdrop-blur-md border-b border-white/10 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
+    <header className="fixed top-0 left-0 w-full z-50 bg-[#050505]/30 backdrop-blur-xl border-b border-white/5 shadow-lg transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-6 h-12 md:h-16 flex items-center justify-between">
         {/* Left: Logo & Name */}
         <div 
           onClick={() => scrollToSection('hero')} 

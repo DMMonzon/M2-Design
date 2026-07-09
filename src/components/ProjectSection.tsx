@@ -151,17 +151,17 @@ export default function ProjectSection({
   return (
     <section
       id={project.id}
-      className="snap-section min-h-screen relative flex items-center justify-center overflow-hidden bg-[#050505] pt-16 pb-4 lg:py-0 border-b border-white/10"
+      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-12 pb-4 lg:py-0 border-b border-white/10"
     >
       {/* Grid background overlay with individual project hue */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none z-0" />
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr ${colors.bg} rounded-full filter blur-[180px] opacity-20 pointer-events-none z-0`} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-8 lg:gap-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col lg:flex-row items-center justify-between gap-3 py-4 lg:py-0">
         
         {/* Left: Beautiful Design Asset Thumbnail Panel */}
-        <div className="w-full lg:w-[50%] flex flex-col justify-center select-none">
-          <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-black/40 ${colors.glow} group max-w-[240px] sm:max-w-[380px] lg:max-w-none mx-auto`}>
+        <div className="w-full lg:w-[50%] flex flex-col justify-between gap-3 select-none">
+          <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-black/40 ${colors.glow} group max-w-md lg:max-w-none mx-auto`}>
             {/* Glowing corner brackets */}
             <div className={`absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 opacity-60 group-hover:opacity-100 transition-opacity`} style={{ borderColor: colors.accent }} />
             <div className={`absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 opacity-60 group-hover:opacity-100 transition-opacity`} style={{ borderColor: colors.accent }} />
@@ -235,7 +235,7 @@ export default function ProjectSection({
         </div>
 
         {/* Right: Dynamic Work Info, testimonial & action CTAs */}
-        <div className="w-full lg:w-[45%] flex flex-col text-left space-y-3 sm:space-y-4 md:space-y-6">
+        <div className="w-full lg:w-[45%] flex flex-col text-left justify-between gap-3 lg:space-y-6 flex-1 lg:flex-none">
           <div className="space-y-1 sm:space-y-2">
             {/* Tech tag */}
             <span className={`text-[10px] sm:text-xs font-mono tracking-widest uppercase font-bold ${colors.text}`}>

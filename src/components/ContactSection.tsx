@@ -71,7 +71,7 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-16 pb-4 px-6 lg:py-12"
+      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-12 pb-4 px-6 lg:py-12"
     >
       {/* Grid overlay */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none z-0" />
@@ -79,7 +79,7 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
       <div className="absolute top-12 left-12 w-[300px] h-[300px] bg-cyber-blue/5 rounded-full filter blur-[100px] pointer-events-none z-0" />
 
       {/* Main Form + Info Layout */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-center space-y-4 sm:space-y-6 lg:space-y-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between py-4 lg:py-0 gap-3">
         
         {/* Intro Section Header */}
         <div className="text-center lg:text-left max-w-4xl space-y-1 sm:space-y-2">
@@ -253,57 +253,6 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
         </div>
 
       </div>
-
-      {/* Footer / Contact Details (as displayed at the bottom of the 3rd mockup) */}
-      <footer className="relative z-10 w-full max-w-7xl mx-auto border-t border-white/10 mt-6 sm:mt-12 pt-4 sm:pt-6 flex flex-col md:flex-row items-center justify-between gap-4 bg-[#050505]">
-        
-        {/* Left footer copyrights */}
-        <span className="text-[10px] font-mono text-white/30 tracking-widest uppercase">
-          © 2026 M2 DESIGN. {currentLang === 'ES' ? 'Hecho en Argentina con amor.' : 'Crafted with passion.'}
-        </span>
-
-        {/* Dynamic Social handles */}
-        <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 font-mono text-[10px] sm:text-xs text-white/70">
-          
-          <a
-            href="https://behance.net/dmmonzon82"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-1.5 hover:text-cyber-pink transition-colors"
-            id="footer-behance"
-          >
-            <FolderHeart className="w-4 h-4 text-cyber-pink" />
-            <span className="font-semibold">Behance</span>
-            <span className="text-white/30">{contactDetails.behance}</span>
-          </a>
-
-          <a
-            href="https://linkedin.com/in/DiegoMartinMonzon"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-1.5 hover:text-cyber-blue transition-colors"
-            id="footer-linkedin"
-          >
-            <Linkedin className="w-4 h-4 text-cyber-blue" />
-            <span className="font-semibold">LinkedIn</span>
-            <span className="text-white/30">DiegoMartinMonzon</span>
-          </a>
-
-          <div className="flex items-center space-x-1.5" id="footer-phone">
-            <Phone className="w-4 h-4 text-white/40" />
-            <span className="text-white/50">{contactDetails.phone}</span>
-          </div>
-
-          <a
-            href={`mailto:${contactDetails.email}`}
-            className="flex items-center space-x-1.5 hover:text-white transition-colors"
-            id="footer-email"
-          >
-            <Mail className="w-4 h-4 text-white/40" />
-            <span className="text-white/50">{contactDetails.email}</span>
-          </a>
-        </div>
-      </footer>
     </section>
   );
 }
