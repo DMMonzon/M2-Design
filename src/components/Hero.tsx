@@ -69,9 +69,9 @@ export default function Hero({ currentLang }: HeroProps) {
               />
               <defs>
                 <linearGradient id="neon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#ff007f" />
-                  <stop offset="50%" stopColor="#9d4edd" />
-                  <stop offset="100%" stopColor="#00f0ff" />
+                  <stop offset="0%" stopColor="#00ff00" />
+                  <stop offset="50%" stopColor="#3075ff" />
+                  <stop offset="100%" stopColor="#608cff" />
                 </linearGradient>
               </defs>
             </svg>

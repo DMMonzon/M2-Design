@@ -51,64 +51,29 @@ export default function ProjectSection({
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
 
-  // Assign color scheme based on project area
+  // Assign color scheme based on project area (only green and blue families)
   const getColors = (area: string) => {
     switch (area) {
       case 'apps':
-        return {
-          glow: 'glow-purple',
-          text: 'text-cyber-purple',
-          bg: 'from-cyber-purple/10 to-transparent',
-          border: 'border-cyber-purple/20 hover:border-cyber-purple',
-          accent: '#9d4edd',
-        };
-      case 'web':
-        return {
-          glow: 'glow-blue',
-          text: 'text-cyber-blue',
-          bg: 'from-cyber-blue/10 to-transparent',
-          border: 'border-cyber-blue/20 hover:border-cyber-blue',
-          accent: '#00f0ff',
-        };
       case 'graphic':
-        return {
-          glow: 'glow-pink',
-          text: 'text-cyber-pink',
-          bg: 'from-cyber-pink/10 to-transparent',
-          border: 'border-cyber-pink/20 hover:border-cyber-pink',
-          accent: '#ff007f',
-        };
       case 'textil':
         return {
-          glow: 'glow-pink',
-          text: 'text-cyber-pink',
+          glow: 'glow-pink', // maps to green in index.css
+          text: 'text-cyber-pink', // maps to green in index.css
           bg: 'from-cyber-pink/10 to-transparent',
           border: 'border-cyber-pink/20 hover:border-cyber-pink',
-          accent: '#ff007f',
+          accent: '#00ff00',
         };
+      case 'web':
       case 'branding':
-        return {
-          glow: 'glow-purple',
-          text: 'text-amber-400',
-          bg: 'from-amber-400/10 to-transparent',
-          border: 'border-amber-400/20 hover:border-amber-400',
-          accent: '#fbbf24',
-        };
       case 'media':
-        return {
-          glow: 'glow-blue',
-          text: 'text-emerald-400',
-          bg: 'from-emerald-400/10 to-transparent',
-          border: 'border-emerald-400/20 hover:border-emerald-400',
-          accent: '#34d399',
-        };
       default:
         return {
-          glow: 'glow-purple',
-          text: 'text-cyber-purple',
-          bg: 'from-cyber-purple/10 to-transparent',
-          border: 'border-cyber-purple/20 hover:border-cyber-purple',
-          accent: '#9d4edd',
+          glow: 'glow-blue', // maps to blue in index.css
+          text: 'text-cyber-blue', // maps to blue in index.css
+          bg: 'from-cyber-blue/10 to-transparent',
+          border: 'border-cyber-blue/20 hover:border-cyber-blue',
+          accent: '#608cff',
         };
     }
   };
@@ -353,7 +318,7 @@ export default function ProjectSection({
                     placeholder={currentLang === 'ES' ? 'Tu apodo (opcional)...' : 'Your nickname (optional)...'}
                     value={newCommentAuthor}
                     onChange={(e) => setNewCommentAuthor(e.target.value)}
-                    className="w-[40%] bg-[#12121e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-cyber-purple"
+                    className="w-[40%] bg-[#12121e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-cyber-blue"
                     id={`comment-author-input-${project.id}`}
                   />
                   <input
@@ -362,7 +327,7 @@ export default function ProjectSection({
                     placeholder={t.commentPlaceholder}
                     value={newCommentText}
                     onChange={(e) => setNewCommentText(e.target.value)}
-                    className="flex-1 bg-[#12121e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-cyber-purple"
+                    className="flex-1 bg-[#12121e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-cyber-blue"
                     id={`comment-text-input-${project.id}`}
                   />
                   <button
