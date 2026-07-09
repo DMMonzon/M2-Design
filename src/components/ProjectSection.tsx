@@ -107,7 +107,7 @@ export default function ProjectSection({
   // Split title helper simplified to render solid text title without outline
   const renderSplitTitle = (title: string) => {
     return (
-      <span className="block font-display text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95]">
+      <span className="block font-display text-xl sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95]">
         {title}
       </span>
     );
@@ -116,7 +116,7 @@ export default function ProjectSection({
   return (
     <section
       id={project.id}
-      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-12 pb-4 lg:py-0 border-b border-white/10"
+      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-12 pb-4 lg:pt-20 lg:pb-6 border-b border-white/10"
     >
       {/* Grid background overlay with individual project hue */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none z-0" />

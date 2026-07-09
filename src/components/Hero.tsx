@@ -20,7 +20,7 @@ export default function Hero({ currentLang }: HeroProps) {
   return (
     <section
       id="hero"
-      className="snap-section min-h-screen relative flex items-center justify-center overflow-hidden bg-[#050505] pt-12 md:pt-0"
+      className="snap-section min-h-screen relative flex items-center justify-center overflow-hidden bg-[#050505] pt-12 lg:pt-20"
     >
       {/* Grid Overlay for futuristic matrix texture */}
       <div className="absolute inset-0 grid-overlay opacity-30 z-0 pointer-events-none" />
@@ -108,7 +108,7 @@ export default function Hero({ currentLang }: HeroProps) {
             </span>
 
             {/* Main elegant heading in Exo font */}
-            <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95] text-balance">
+            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white tracking-tighter uppercase leading-[0.95] text-balance">
               {t.heroTitleMain}
             </h1>
           </motion.div>

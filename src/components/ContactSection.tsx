@@ -71,7 +71,7 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-12 pb-4 px-6 lg:py-12"
+      className="snap-section min-h-screen relative flex flex-col justify-between overflow-hidden bg-[#050505] pt-12 pb-4 px-6 lg:pt-20 lg:pb-12"
     >
       {/* Grid overlay */}
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none z-0" />
@@ -83,7 +83,7 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
         
         {/* Intro Section Header */}
         <div className="text-center lg:text-left max-w-4xl space-y-1 sm:space-y-2">
-          <h2 className="font-display text-2xl sm:text-4xl md:text-5xl xl:text-6xl font-black tracking-tighter text-white uppercase leading-none">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black tracking-tighter text-white uppercase leading-none">
             {t.contactTitle} {t.contactSubtitle}
           </h2>
           <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/50 max-w-3xl leading-relaxed font-light italic">
