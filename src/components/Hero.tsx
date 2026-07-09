@@ -32,61 +32,7 @@ export default function Hero({ currentLang }: HeroProps) {
       {/* Hero Visual Layout: Flexible Responsive Grid */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-4 sm:gap-6 lg:gap-12 pt-14 pb-4 lg:py-0">
         
-        {/* Left: Text & CTA */}
-        <div className="w-full lg:w-1/2 flex flex-col text-left space-y-3 sm:space-y-4 lg:space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-2"
-          >
-            {/* Tagline/Pre-title (Volanta) */}
-            <span className="inline-block text-[10px] sm:text-xs md:text-sm font-metrophobic tracking-widest text-cyber-blue uppercase font-bold">
-              // {t.heroTitlePre}
-            </span>
-
-            {/* Main elegant heading in Exo font */}
-            <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95] text-balance">
-              {t.heroTitleMain}
-            </h1>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-metrophobic text-xs sm:text-sm md:text-lg text-white/60 max-w-lg leading-relaxed font-light"
-          >
-            {currentLang === 'ES' 
-              ? 'Con un enfoque disruptivo y tecnologías de vanguardia, fusiono arte y código para crear experiencias memorables.'
-              : 'With a disruptive approach and cutting-edge technologies, I blend art and code to engineer memorable digital experiences.'}
-          </motion.p>
-
-          {/* Action CTAs in Artistic Flair style */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-row gap-3"
-          >
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="px-4 py-2.5 sm:px-8 sm:py-3.5 bg-white text-black font-black uppercase tracking-widest rounded-full shadow-xl hover:bg-cyber-blue hover:text-white hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs"
-              id="hero-cta-idea"
-            >
-              {t.heroCTA1}
-            </button>
-            <button
-              onClick={() => scrollToSection('proj-apps')}
-              className="px-4 py-2.5 sm:px-8 sm:py-3.5 bg-cyber-purple/20 border border-cyber-pink/30 text-white font-black uppercase tracking-widest rounded-full hover:border-cyber-pink hover:bg-cyber-pink hover:scale-[1.02] active:scale-95 hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-300 text-[10px] sm:text-xs"
-              id="hero-cta-work"
-            >
-              {t.heroCTA2}
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Right: Stunning Paint Explosion Render & Futuristic Wave */}
+        {/* Left: Stunning Paint Explosion Render & Futuristic Wave (Image first) */}
         <div className="w-full lg:w-1/2 flex items-center justify-center relative select-none">
           {/* Subtle responsive placeholder image with high premium aesthetics */}
           <motion.div
@@ -145,6 +91,60 @@ export default function Hero({ currentLang }: HeroProps) {
             <div className="absolute top-10 right-10 w-2 h-2 rounded-full bg-cyber-pink animate-ping" />
             <div className="absolute bottom-16 left-12 w-3 h-3 rounded-full bg-cyber-blue animate-pulse" />
             <div className="absolute top-1/2 left-2 w-1.5 h-1.5 rounded-full bg-cyber-purple" />
+          </motion.div>
+        </div>
+
+        {/* Right: Text & CTA (Text second) */}
+        <div className="w-full lg:w-1/2 flex flex-col text-left space-y-3 sm:space-y-4 lg:space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-2"
+          >
+            {/* Tagline/Pre-title (Volanta) */}
+            <span className="inline-block text-[10px] sm:text-xs md:text-sm font-metrophobic tracking-widest text-cyber-blue uppercase font-bold">
+              // {t.heroTitlePre}
+            </span>
+
+            {/* Main elegant heading in Exo font */}
+            <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white tracking-tighter uppercase leading-[0.95] text-balance">
+              {t.heroTitleMain}
+            </h1>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-metrophobic text-xs sm:text-sm md:text-lg text-white/60 max-w-lg leading-relaxed font-light"
+          >
+            {currentLang === 'ES' 
+              ? 'Con un enfoque disruptivo y tecnologías de vanguardia, fusiono arte y código para crear experiencias memorables.'
+              : 'With a disruptive approach and cutting-edge technologies, I blend art and code to engineer memorable digital experiences.'}
+          </motion.p>
+
+          {/* Action CTAs in Artistic Flair style */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-row gap-3"
+          >
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="px-4 py-2.5 sm:px-8 sm:py-3.5 bg-white text-black font-black uppercase tracking-widest rounded-full shadow-xl hover:bg-cyber-blue hover:text-white hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs"
+              id="hero-cta-idea"
+            >
+              {t.heroCTA1}
+            </button>
+            <button
+              onClick={() => scrollToSection('proj-apps')}
+              className="px-4 py-2.5 sm:px-8 sm:py-3.5 bg-cyber-purple/20 border border-cyber-pink/30 text-white font-black uppercase tracking-widest rounded-full hover:border-cyber-pink hover:bg-cyber-pink hover:scale-[1.02] active:scale-95 hover:shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all duration-300 text-[10px] sm:text-xs"
+              id="hero-cta-work"
+            >
+              {t.heroCTA2}
+            </button>
           </motion.div>
         </div>
       </div>
