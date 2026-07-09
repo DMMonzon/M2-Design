@@ -79,8 +79,10 @@ export default function Header({
           {/* Contact Link */}
           <button
             onClick={() => scrollToSection('contact')}
-            className={`bg-white text-black px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider hover:bg-cyber-blue hover:text-white transition-all duration-300 shadow-md ${
-              activeSection === 'contact' ? 'bg-cyber-blue text-white' : ''
+            className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-md ${
+              activeSection === 'contact'
+                ? 'bg-cyber-blue text-white'
+                : 'bg-white text-black hover:bg-cyber-blue hover:text-white'
             }`}
             id="nav-contact"
           >
