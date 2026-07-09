@@ -51,18 +51,18 @@ export default function ProjectSection({
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
 
-  // Assign color scheme based on project area (only green and blue families)
+  // Assign color scheme based on project area (only magenta and blue families)
   const getColors = (area: string) => {
     switch (area) {
       case 'apps':
       case 'graphic':
       case 'textil':
         return {
-          glow: 'glow-pink', // maps to green in index.css
-          text: 'text-cyber-pink', // maps to green in index.css
+          glow: 'glow-pink', // maps to magenta in index.css
+          text: 'text-cyber-pink', // maps to magenta in index.css
           bg: 'from-cyber-pink/10 to-transparent',
           border: 'border-cyber-pink/20 hover:border-cyber-pink',
-          accent: '#00ff00',
+          accent: '#ff00ff',
         };
       case 'web':
       case 'branding':

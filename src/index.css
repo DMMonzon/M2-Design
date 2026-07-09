@@ -8,8 +8,8 @@
   --font-exo: "Exo", sans-serif;
   --font-metrophobic: "Metrophobic", sans-serif;
   
-  --color-cyber-purple: #00cc00; /* green derivative */
-  --color-cyber-pink: #00ff00; /* green core */
+  --color-cyber-purple: #cc00cc; /* magenta derivative */
+  --color-cyber-pink: #ff00ff; /* magenta core */
   --color-cyber-blue: #608cff; /* blue core */
   --color-dark-bg: #050505;
 }
@@ -60,23 +60,23 @@ html {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
-/* Glow effects with green/blue derivatives */
+/* Glow effects with magenta/blue derivatives */
 .glow-pink {
-  box-shadow: 0 0 40px -15px rgba(0, 255, 0, 0.4); /* green */
+  box-shadow: 0 0 40px -15px rgba(255, 0, 255, 0.4); /* magenta */
 }
 .glow-blue {
   box-shadow: 0 0 40px -15px rgba(96, 140, 255, 0.4); /* blue */
 }
 .glow-purple {
-  box-shadow: 0 0 40px -15px rgba(0, 204, 0, 0.4); /* green-dark */
+  box-shadow: 0 0 40px -15px rgba(204, 0, 204, 0.4); /* magenta-dark */
 }
 
 .text-glow-pink {
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
 }
 .text-glow-blue {
   text-shadow: 0 0 10px rgba(96, 140, 255, 0.4);
 }
 .text-glow-purple {
-  text-shadow: 0 0 10px rgba(0, 204, 0, 0.4);
+  text-shadow: 0 0 10px rgba(204, 0, 204, 0.4);
 }
