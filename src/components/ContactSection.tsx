@@ -91,25 +91,25 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
           </p>
         </div>
 
-        {/* Content Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-start">
+        {/* Content Cards Layout */}
+        <div className="flex flex-col gap-4 lg:gap-5 flex-1 justify-center">
           
-          {/* Left Cards Stack (Cols: 5) */}
-          <div className="lg:col-span-5 flex flex-col gap-4 w-full">
+          {/* Top Row: Sobre Mí (Left) & Tecnologías Aplicadas (Right) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             
             {/* Card 1: Sobre mí */}
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-6 relative overflow-hidden shadow-xl hover:border-white/20 transition-all">
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xl hover:border-white/20 transition-all flex flex-col justify-center">
               <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// ABOUT ME</span>
-              <h3 className="text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em] mb-4 sm:mb-6">
+              <h3 className="text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em] mb-3 sm:mb-4">
                 {t.aboutMe}
               </h3>
 
-              <div className="flex flex-row items-start gap-4 sm:gap-6">
+              <div className="flex flex-row items-center gap-4 sm:gap-6">
                 {/* Avatar matching rotated NP avatar container */}
                 <div className="relative shrink-0 select-none">
-                  <div className="w-14 h-14 sm:w-20 sm:h-20 bg-zinc-800 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-300">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-zinc-800 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-300">
                     <img
-                       src={contactDetails.avatar}
+                      src={contactDetails.avatar}
                       alt={contactDetails.name}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
@@ -118,23 +118,23 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
                   </div>
                 </div>
 
-                <div className="space-y-2 sm:space-y-4 text-left flex-1">
+                <div className="space-y-2 text-left flex-1">
                   <div>
-                    <h4 className="font-display font-black text-base sm:text-xl text-white tracking-tight uppercase">{contactDetails.name}</h4>
-                    <span className="text-[9px] sm:text-[10px] text-white/40 uppercase tracking-widest block mt-0.5 sm:mt-1">
+                    <h4 className="font-display font-black text-sm sm:text-base text-white tracking-tight uppercase">{contactDetails.name}</h4>
+                    <span className="text-[9px] text-white/40 uppercase tracking-widest block mt-0.5">
                       {contactDetails.age} {t.yearsOld} <span className="text-cyber-blue">•</span> {contactDetails.phrase[currentLang]}
                     </span>
                   </div>
 
                   {/* Skills/Conocimientos */}
-                  <div className="space-y-1.5 sm:space-y-3 text-left">
-                    <span className="block text-[8px] sm:text-[9px] font-mono tracking-widest text-white/35 uppercase">
+                  <div className="space-y-1 text-left">
+                    <span className="block text-[8px] font-mono tracking-widest text-white/35 uppercase">
                       {t.knowledge}
                     </span>
-                    <ul className="grid grid-cols-2 gap-1.5">
+                    <ul className="grid grid-cols-2 gap-1">
                       {skillsList.map((skill, index) => (
-                        <li key={index} className="flex items-center space-x-1.5 text-[11px] sm:text-xs text-white/80 font-light">
-                          {renderIcon(skill.iconName, 'w-3 h-3 text-cyber-pink shrink-0')}
+                        <li key={index} className="flex items-center space-x-1 text-[10px] text-white/80 font-light">
+                          {renderIcon(skill.iconName, 'w-2.5 h-2.5 text-cyber-pink shrink-0')}
                           <span className="truncate">{skill.name[currentLang]}</span>
                         </li>
                       ))}
@@ -145,20 +145,20 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
             </div>
 
             {/* Card 2: Tecnologías */}
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-6 relative overflow-hidden shadow-xl hover:border-white/20 transition-all">
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-xl hover:border-white/20 transition-all flex flex-col justify-center">
               <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// TECH STACK</span>
-              <h3 className="text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em] mb-4 sm:mb-6">
+              <h3 className="text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em] mb-3 sm:mb-4">
                 {t.technologies}
               </h3>
 
-              <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {technologiesList.map((tech, index) => (
                   <div 
                     key={index} 
-                    className="flex items-center space-x-2 p-1.5 sm:p-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-colors"
+                    className="flex items-center space-x-1.5 p-1.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-colors"
                   >
-                    {renderIcon(tech.iconName, 'w-3 h-3 sm:w-4 sm:h-4 text-cyber-blue shrink-0')}
-                    <span className="text-[10px] sm:text-xs text-white/80 font-mono truncate">{tech.name}</span>
+                    {renderIcon(tech.iconName, 'w-2.5 h-2.5 text-cyber-blue shrink-0')}
+                    <span className="text-[9px] text-white/80 font-mono truncate">{tech.name}</span>
                   </div>
                 ))}
               </div>
@@ -166,9 +166,9 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
 
           </div>
 
-          {/* Right Card Form (Cols: 7) */}
-          <div className="lg:col-span-7 w-full relative">
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden shadow-2xl">
+          {/* Bottom Row: Contact Form */}
+          <div className="w-full relative">
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-5 md:p-6 relative overflow-hidden shadow-2xl">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyber-blue/10 to-transparent rounded-bl-full pointer-events-none" />
 
               {/* Success Alert Banner overlay */}
@@ -181,11 +181,11 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
                     className="absolute inset-0 bg-[#050505]/95 backdrop-blur-md z-20 flex flex-col items-center justify-center text-center p-6"
                     id="contact-success-overlay"
                   >
-                    <CheckCircle2 className="w-16 h-16 text-emerald-400 animate-pulse mb-4 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]" />
-                    <h3 className="font-display font-black text-white text-xl md:text-2xl mb-2 uppercase">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-400 animate-pulse mb-3 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]" />
+                    <h3 className="font-display font-black text-white text-lg md:text-xl mb-1 uppercase">
                       {currentLang === 'ES' ? '¡Mensaje Enviado!' : 'Message Sent!'}
                     </h3>
-                    <p className="text-sm text-white/50 max-w-sm leading-relaxed">
+                    <p className="text-xs text-white/50 max-w-sm leading-relaxed">
                       {t.successMsg}
                     </p>
                   </motion.div>
@@ -193,47 +193,52 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
               </AnimatePresence>
 
               {/* Actual Form */}
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                <div className="space-y-1 text-left">
-                  <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                    {t.formName}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 sm:p-3 text-sm text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20"
-                    placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
-                    id="contact-name-input"
-                  />
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Name Input */}
+                  <div className="space-y-1 text-left">
+                    <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
+                      {t.formName}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formName}
+                      onChange={(e) => setFormName(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20"
+                      placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
+                      id="contact-name-input"
+                    />
+                  </div>
+
+                  {/* Email Input */}
+                  <div className="space-y-1 text-left">
+                    <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
+                      {t.formEmail}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formEmail}
+                      onChange={(e) => setFormEmail(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20"
+                      placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
+                      id="contact-email-input"
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-1 text-left">
-                  <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                    {t.formEmail}
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formEmail}
-                    onChange={(e) => setFormEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 sm:p-3 text-sm text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20"
-                    placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
-                    id="contact-email-input"
-                  />
-                </div>
-
+                {/* Message Textarea */}
                 <div className="space-y-1 text-left">
                   <label className="block text-[9px] sm:text-[10px] uppercase font-black text-cyber-blue tracking-[0.2em]">
                     {t.formMessage}
                   </label>
                   <textarea
                     required
-                    rows={3}
+                    rows={2}
                     value={formMessage}
                     onChange={(e) => setFormMessage(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 sm:p-3 text-sm text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 resize-none"
                     placeholder={currentLang === 'ES' ? '¿Qué tenés en mente?' : 'What do you have in mind?'}
                     id="contact-message-input"
                   />
@@ -241,7 +246,7 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 sm:py-3 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 shadow-md cursor-pointer"
+                  className="w-full py-2 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 shadow-md cursor-pointer"
                   id="contact-submit-btn"
                 >
                   {t.formSubmit}
