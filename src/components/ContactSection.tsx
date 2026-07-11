@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Language } from '../types';
 import { dict, contactDetails, skillsList, technologiesList } from '../data';
 import { 
@@ -33,6 +33,49 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
   const [formMessage, setFormMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<HTMLDivElement>(null);
+  const recaptchaWidgetId = useRef<number | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    const initRecaptcha = () => {
+      if (window && (window as any).grecaptcha && (window as any).grecaptcha.render && recaptchaRef.current) {
+        try {
+          recaptchaWidgetId.current = (window as any).grecaptcha.render(recaptchaRef.current, {
+            sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', // standard Google test key for reCAPTCHA v2
+            theme: 'dark',
+            callback: (token: string) => {
+              if (active) setRecaptchaToken(token);
+            },
+            'expired-callback': () => {
+              if (active) setRecaptchaToken(null);
+            },
+          });
+        } catch (e) {
+          console.error("reCAPTCHA rendering error:", e);
+        }
+        return true;
+      }
+      return false;
+    };
+
+    if (!initRecaptcha()) {
+      const interval = setInterval(() => {
+        if (initRecaptcha()) {
+          clearInterval(interval);
+        }
+      }, 300);
+      return () => {
+        active = false;
+        clearInterval(interval);
+      };
+    }
+    return () => {
+      active = false;
+    };
+  }, []);
+
   // Helper to dynamically render icons without bundle failures
   const renderIcon = (iconName: string, className: string = 'w-4 h-4 text-cyber-blue') => {
     switch (iconName) {
@@ -54,13 +97,22 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formName || !formEmail || !formMessage) return;
+    if (!formName || !formEmail || !formMessage || !recaptchaToken) return;
 
     // Simulate submission to the Argentine designer
     setIsSubmitted(true);
     setFormName('');
     setFormEmail('');
     setFormMessage('');
+    setRecaptchaToken(null);
+
+    if (recaptchaWidgetId.current !== null && (window as any).grecaptcha) {
+      try {
+        (window as any).grecaptcha.reset(recaptchaWidgetId.current);
+      } catch (err) {
+        console.error("Failed to reset reCAPTCHA:", err);
+      }
+    }
 
     // Reset after some seconds
     setTimeout(() => {
@@ -105,12 +157,12 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
               <div className="flex flex-row items-center gap-3.5 mb-4">
                 {/* Avatar */}
                 <div className="relative shrink-0 select-none">
-                  <div className="w-14 h-14 bg-zinc-850 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-300">
+                  <div className="group w-14 h-14 bg-zinc-850 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-300">
                     <img
                       src={contactDetails.avatar}
                       alt={contactDetails.name}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-110"
                       id="contact-profile-avatar"
                     />
                   </div>
@@ -168,7 +220,8 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
 
           {/* Card 3: Formulario de Contacto (Cols: 6) - Dark theme */}
           <div className="lg:col-span-6 w-full relative">
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-5 md:p-6 relative overflow-hidden shadow-2xl h-full flex flex-col justify-center">
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-5 md:p-6 relative overflow-hidden shadow-2xl h-full flex flex-col justify-between hover:border-white/20 transition-all">
+              <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// CONTACT FORM</span>
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyber-blue/10 to-transparent rounded-bl-full pointer-events-none" />
 
               {/* Success Alert Banner overlay */}
@@ -192,65 +245,83 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
                 )}
               </AnimatePresence>
 
-              {/* Actual Form - Dark theme inputs */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Name Input */}
-                <div className="text-left space-y-1">
-                  <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                    {t.formName}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 font-metrophobic"
-                    placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
-                    id="contact-name-input"
-                  />
+              <div className="w-full">
+                <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                  <span className="text-[10px] font-bold tracking-widest text-cyber-blue uppercase">
+                    {t.contactForm}
+                  </span>
                 </div>
 
-                {/* Email Input */}
-                <div className="text-left space-y-1">
-                  <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                    {t.formEmail}
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formEmail}
-                    onChange={(e) => setFormEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 font-metrophobic"
-                    placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
-                    id="contact-email-input"
-                  />
-                </div>
+                {/* Actual Form - Dark theme inputs */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Name Input */}
+                  <div className="text-left space-y-1">
+                    <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
+                      {t.formName}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formName}
+                      onChange={(e) => setFormName(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 font-metrophobic"
+                      placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
+                      id="contact-name-input"
+                    />
+                  </div>
 
-                {/* Message Textarea */}
-                <div className="text-left space-y-1">
-                  <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                    {t.formMessage}
-                  </label>
-                  <textarea
-                    required
-                    rows={3}
-                    value={formMessage}
-                    onChange={(e) => setFormMessage(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 resize-none font-metrophobic"
-                    placeholder={currentLang === 'ES' ? '¿Qué tenés en mente?' : 'What do you have in mind?'}
-                    id="contact-message-input"
-                  />
-                </div>
+                  {/* Email Input */}
+                  <div className="text-left space-y-1">
+                    <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
+                      {t.formEmail}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formEmail}
+                      onChange={(e) => setFormEmail(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 font-metrophobic"
+                      placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
+                      id="contact-email-input"
+                    />
+                  </div>
 
-                {/* Submit button styled like other primary buttons */}
-                <button
-                  type="submit"
-                  className="w-full py-2 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-lg hover:bg-cyber-blue hover:text-white transition-all duration-300 shadow-md cursor-pointer active:scale-95"
-                  id="contact-submit-btn"
-                >
-                  {t.formSubmit}
-                </button>
-              </form>
+                  {/* Message Textarea */}
+                  <div className="text-left space-y-1">
+                    <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
+                      {t.formMessage}
+                    </label>
+                    <textarea
+                      required
+                      rows={3}
+                      value={formMessage}
+                      onChange={(e) => setFormMessage(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 resize-none font-metrophobic"
+                      placeholder={currentLang === 'ES' ? '¿Qué tenés en mente?' : 'What do you have in mind?'}
+                      id="contact-message-input"
+                    />
+                  </div>
+
+                  {/* reCAPTCHA Validation */}
+                  <div className="flex justify-center py-2 select-none">
+                    <div ref={recaptchaRef} />
+                  </div>
+
+                  {/* Submit button styled like other primary buttons */}
+                  <button
+                    type="submit"
+                    disabled={!recaptchaToken}
+                    className={`w-full py-2 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-lg transition-all duration-300 shadow-md ${
+                      !recaptchaToken
+                        ? 'opacity-40 cursor-not-allowed'
+                        : 'hover:bg-cyber-blue hover:text-white cursor-pointer active:scale-95'
+                    }`}
+                    id="contact-submit-btn"
+                  >
+                    {t.formSubmit}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
 

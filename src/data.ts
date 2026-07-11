@@ -1,4 +1,6 @@
 import { Project, SkillItem, TechnologyItem } from './types';
+// @ts-expect-error - Vite handles image imports
+import perfilImg from '../assets/img/Perfil.png';
 
 export const projectsData: Project[] = [
   {
@@ -337,7 +339,7 @@ export const contactDetails = {
   name: 'Martín Monzón',
   age: 42,
   phrase: { ES: '"Crear o reventar"', EN: '"Create or Burst"' },
-  avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&h=400&q=80', // friendly, cap look creative guy
+  avatar: perfilImg,
   behance: '@dmmonzon82',
   linkedin: 'DiegoMartinMonzon',
   phone: '+54 9 (011) 15 6529 8800',
@@ -358,6 +360,7 @@ export const dict = {
     yearsOld: 'años de edad',
     knowledge: 'Conocimientos adquiridos',
     technologies: 'Tecnologías aplicadas',
+    contactForm: 'Formulario de contacto',
     formName: 'Nombre y Apellido',
     formEmail: 'E-mail',
     formMessage: 'Mensaje',
@@ -385,6 +388,7 @@ export const dict = {
     yearsOld: 'years old',
     knowledge: 'Acquired knowledge',
     technologies: 'Applied technologies',
+    contactForm: 'Contact form',
     formName: 'Full Name',
     formEmail: 'Email Address',
     formMessage: 'Message',
