@@ -133,44 +133,6 @@ export default function App() {
         <ContactSection currentLang={currentLang} />
       </main>
 
-      {/* Vertical Dot Navigation System (shown on right hand side, as in attached mockups) */}
-      <div className="hidden md:flex fixed right-4 lg:right-6 top-1/2 -translate-y-1/2 flex-col items-center space-y-3 z-40 bg-black/40 backdrop-blur-md p-2.5 rounded-full border border-white/10 shadow-2xl select-none animate-fade-in">
-        {allSections.map((sect, idx) => {
-          const isActive = activeSection === sect.id;
-          return (
-            <button
-              key={sect.id}
-              onClick={() => scrollToSection(sect.id)}
-              className="relative group flex items-center justify-center p-1 focus:outline-none"
-              title={sect.label[currentLang]}
-              id={`dot-${sect.id}`}
-            >
-              {/* Outer glowing ring for active state */}
-              {isActive && (
-                <motion.span
-                  layoutId="activeDotRing"
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  className="absolute inset-0 w-6 h-6 rounded-full border border-cyber-pink/50 shadow-[0_0_8px_rgba(255,0,127,0.3)]"
-                />
-              )}
-              {/* Actual core dot circle */}
-              <span
-                className={`w-2 h-2 rounded-full border transition-all duration-300 ${
-                  isActive
-                    ? 'bg-gradient-to-tr from-cyber-pink to-cyber-blue border-transparent scale-110'
-                    : 'border-white/30 hover:border-white/80 bg-transparent'
-                }`}
-              />
-
-              {/* Tooltip side label (hidden by default, reveals on hover) */}
-              <span className="absolute right-8 top-1/2 -translate-y-1/2 px-2 py-0.5 bg-[#0a0a0a] border border-white/10 rounded-lg text-[9px] font-mono tracking-widest text-white/70 uppercase whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none shadow-xl">
-                {sect.label[currentLang]}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
       {/* Floating Interactive Toast Feedback Banner */}
       <AnimatePresence>
         {toastMessage && (

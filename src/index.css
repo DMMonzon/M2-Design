@@ -37,6 +37,10 @@ html {
 
 /* Custom snap-scroll on desktop screens */
 @media (min-width: 1024px) {
+  html, body {
+    overflow: hidden;
+    height: 100vh;
+  }
   .snap-container {
     scroll-snap-type: y mandatory;
     height: 100vh;
@@ -79,4 +83,29 @@ html {
 }
 .text-glow-purple {
   text-shadow: 0 0 10px rgba(204, 0, 204, 0.4);
+}
+
+/* Markdown Content Styling */
+.markdown-content p,
+.markdown-content span,
+.markdown-content div,
+.markdown-content code,
+.markdown-content pre {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  text-indent: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  margin-left: 0 !important;
+}
+
+.markdown-content p {
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.markdown-content p:last-child {
+  margin-bottom: 0;
 }

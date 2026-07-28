@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Project, Language } from '../types';
 import { dict } from '../data';
-import { Heart, Share2, MessageSquare, ArrowRight, Send, X } from 'lucide-react';
+import { Heart, Share2, MessageSquare, ArrowRight, Send, X, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import ReactMarkdown from 'react-markdown';
 
 interface ProjectSectionProps {
   project: Project;
@@ -30,6 +31,7 @@ export default function ProjectSection({
 
   // Local state for comments
   const [showComments, setShowComments] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   const [commentsList, setCommentsList] = useState<LocalComment[]>([
     {
       id: 'c1',
@@ -50,20 +52,26 @@ export default function ProjectSection({
   ]);
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
 
   // Carousel/Tabs system states
   const [activeExampleIndex, setActiveExampleIndex] = useState(0);
   const [examples, setExamples] = useState(project.examples);
   const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
 
-  // Auto rotation effect (every 2 seconds, stops on hover)
+  // Reset video mute state when switching tabs
   useEffect(() => {
-    if (isAutoplayPaused) return;
+    setIsVideoMuted(true);
+  }, [activeExampleIndex]);
+
+  // Auto rotation effect (every 3 seconds, stops on hover or when overlay is open)
+  useEffect(() => {
+    if (isAutoplayPaused || showOverlay) return;
     const interval = setInterval(() => {
       setActiveExampleIndex((prev) => (prev + 1) % project.examples.length);
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
-  }, [project.examples.length, isAutoplayPaused]);
+  }, [project.examples.length, isAutoplayPaused, showOverlay, activeExampleIndex]);
 
   // Antispam states
   const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
@@ -229,11 +237,11 @@ export default function ProjectSection({
         return {
           ES: {
             primary: 'ver trabajos de Branding',
-            secondary: 'quiero un Branding'
+            secondary: 'quiero un trabajo de Branding'
           },
           EN: {
             primary: 'see Branding work',
-            secondary: 'I want Branding'
+            secondary: 'I want a Branding work'
           }
         };
       case 'textil':
@@ -262,11 +270,11 @@ export default function ProjectSection({
         return {
           ES: {
             primary: 'ver trabajos de Media',
-            secondary: 'quiero un Media'
+            secondary: 'quiero un trabajo Multimedia'
           },
           EN: {
             primary: 'see Media work',
-            secondary: 'I want Media'
+            secondary: 'I want a Media Work'
           }
         };
       default:
@@ -301,7 +309,7 @@ export default function ProjectSection({
       <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none z-0" />
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr ${colors.bg} rounded-full filter blur-[180px] opacity-20 pointer-events-none z-0`} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col lg:flex-row items-center justify-between gap-3 py-4 lg:py-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-3 py-4 lg:py-0">
 
         {/* Left: Beautiful Design Asset Thumbnail Panel */}
         <div className="w-full lg:w-[50%] flex flex-col justify-between gap-3 select-none">
@@ -316,14 +324,26 @@ export default function ProjectSection({
             <div className={`absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 opacity-60 group-hover:opacity-100 transition-opacity`} style={{ borderColor: colors.accent }} />
             <div className={`absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 opacity-60 group-hover:opacity-100 transition-opacity`} style={{ borderColor: colors.accent }} />
 
-            {/* Main project high res mockup */}
-            <img
-              src={examples[activeExampleIndex].image}
-              alt={examples[activeExampleIndex].title[currentLang]}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              id={`image-${project.id}`}
-            />
+            {/* Main project high res mockup or video */}
+            {examples[activeExampleIndex].video ? (
+              <video
+                src={examples[activeExampleIndex].video}
+                autoPlay
+                loop
+                muted={isVideoMuted}
+                playsInline
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                id={`video-${project.id}`}
+              />
+            ) : (
+              <img
+                src={examples[activeExampleIndex].image}
+                alt={examples[activeExampleIndex].title[currentLang]}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                id={`image-${project.id}`}
+              />
+            )}
 
             {/* Glowing visual tag overlay */}
             <div className="absolute top-6 left-6 px-3 py-1 bg-black/80 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-mono tracking-widest text-white uppercase z-10">
@@ -363,15 +383,77 @@ export default function ProjectSection({
               </button>
             </div>
 
-            {/* Detail Access Button positioned absolutely over the image */}
+            {/* Mute/Unmute Button for Video */}
+            {examples[activeExampleIndex].video && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsVideoMuted(!isVideoMuted);
+                }}
+                className="absolute bottom-6 left-6 z-20 w-8 h-8 rounded-lg border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black hover:border-white hover:scale-105 active:scale-95 transition-all flex items-center justify-center cursor-pointer shadow-lg animate-fade-in"
+                title={isVideoMuted ? (currentLang === 'ES' ? 'Activar sonido' : 'Unmute') : (currentLang === 'ES' ? 'Desactivar sonido' : 'Mute')}
+                id={`volume-toggle-${project.id}`}
+              >
+                {isVideoMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              </button>
+            )}
+
+            {/* Detail Access Button positioned absolutely over the image/video */}
             <button
-              onClick={() => alert(currentLang === 'ES' ? 'El detalle del trabajo se creará en una etapa posterior.' : 'Work detail page will be created in a later stage.')}
+              onClick={() => setShowOverlay(true)}
               className="absolute bottom-6 right-6 z-20 px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-widest rounded-lg border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black hover:border-white hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
               id={`detail-${project.id}`}
             >
               <span>{currentLang === 'ES' ? 'Ver Detalle' : 'View Detail'}</span>
               <ArrowRight className="w-3 h-3" />
             </button>
+
+            {/* Detail Overlay */}
+            <AnimatePresence>
+              {showOverlay && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-black/70 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex flex-col justify-center text-white z-30"
+                >
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowOverlay(false);
+                    }}
+                    className="absolute top-4 right-4 p-1.5 rounded-full border border-white/10 bg-black/50 text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer shadow-lg"
+                    id={`close-detail-${project.id}`}
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+
+                  <div className="space-y-2.5 pr-4 max-h-full overflow-y-auto">
+                    <span className={`text-[9px] font-mono tracking-widest uppercase font-bold ${colors.text}`}>
+                      // {project.areaLabel[currentLang]}
+                    </span>
+                    <h3 className="font-display text-base sm:text-lg font-black uppercase tracking-wider text-white">
+                      {examples[activeExampleIndex].title[currentLang]}
+                    </h3>
+                    <div className="font-sans text-xs sm:text-sm text-white/90 font-light markdown-content">
+                      <ReactMarkdown
+                        components={{
+                          code({ node, className, children }) {
+                            return <span className={className}>{children}</span>;
+                          },
+                          pre({ node, className, children }) {
+                            return <div className={className}>{children}</div>;
+                          }
+                        }}
+                      >
+                        {examples[activeExampleIndex].description[currentLang]}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Carousel Solapas */}
@@ -385,10 +467,10 @@ export default function ProjectSection({
                     key={ex.id}
                     onClick={() => setActiveExampleIndex(idx)}
                     className={`px-3 py-1.5 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider rounded-lg border transition-all duration-300 ${isActive
-                        ? colors.text === 'text-cyber-pink'
-                          ? 'bg-cyber-pink/20 border-cyber-pink text-white font-bold'
-                          : 'bg-cyber-blue/20 border-cyber-blue text-white font-bold'
-                        : 'bg-black/40 border-white/10 text-white/50 hover:border-white/30 hover:text-white'
+                      ? colors.text === 'text-cyber-pink'
+                        ? 'bg-cyber-pink/20 border-cyber-pink text-white font-bold'
+                        : 'bg-cyber-blue/20 border-cyber-blue text-white font-bold'
+                      : 'bg-black/40 border-white/10 text-white/50 hover:border-white/30 hover:text-white'
                       }`}
                   >
                     {ex.title[currentLang]}
@@ -400,20 +482,32 @@ export default function ProjectSection({
         </div>
 
         {/* Right: Dynamic Work Info, testimonial & action CTAs */}
-        <div className="w-full lg:w-[45%] flex flex-col text-left justify-between gap-3 lg:space-y-6 flex-1 lg:flex-none">
-          <div className="space-y-1 sm:space-y-2">
-            {/* Tech tag */}
-            <span className={`text-[10px] sm:text-xs font-mono tracking-widest uppercase font-bold ${colors.text}`}>
-              // {project.areaLabel[currentLang]}
-            </span>
-            {/* Project title styled with outline text-stroke */}
-            {renderSplitTitle(project.title[currentLang])}
-          </div>
+        <div className="w-full lg:w-[45%] flex flex-col text-left justify-start gap-[clamp(1rem,2vh,1.75rem)] flex-1 lg:flex-none">
+          {/* Tech tag */}
+          <span className={`text-[10px] sm:text-xs font-mono tracking-widest uppercase font-bold ${colors.text}`}>
+            // {project.areaLabel[currentLang]}
+          </span>
+          {/* Project title styled with outline text-stroke */}
+          {renderSplitTitle(project.title[currentLang])}
 
           {/* Description */}
           <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/80 font-normal leading-relaxed line-clamp-2 sm:line-clamp-none">
             {project.description[currentLang]}
           </p>
+
+          {/* Action CTA: Principal ("QUIERO UNA...") */}
+          <div className="flex flex-row">
+            <button
+              onClick={scrollToContact}
+              className={`px-4 py-2 sm:px-6 sm:py-3 font-black uppercase tracking-widest rounded-full hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${colors.text === 'text-cyber-pink'
+                ? 'bg-cyber-purple/20 border border-cyber-pink/30 text-white hover:border-cyber-pink hover:bg-cyber-pink hover:shadow-[0_0_20px_rgba(204,0,204,0.3)]'
+                : 'bg-cyber-blue/10 border border-cyber-blue/30 text-white hover:border-cyber-blue hover:bg-cyber-blue hover:shadow-[0_0_20px_rgba(96,140,255,0.3)]'
+                }`}
+              id={`cta-secondary-${project.id}`}
+            >
+              {getCtaLabels(project.area)[currentLang].secondary}
+            </button>
+          </div>
 
           {/* User Opinion (Testimonial Card) - beautifully structured, stylized */}
           <div className="relative p-3.5 sm:p-5 rounded-xl bg-[#0a0a0a] border border-white/10 backdrop-blur-md overflow-hidden flex flex-row items-center sm:items-start gap-3 sm:gap-4 shadow-xl">
@@ -442,30 +536,6 @@ export default function ProjectSection({
                 "{project.testimonial.text[currentLang]}"
               </p>
             </div>
-          </div>
-
-          {/* Action CTAs: Primary and Secondary styles */}
-          <div className="flex flex-row gap-3">
-            <button
-              onClick={() => window.open('https://behance.net/dmmonzon82', '_blank')}
-              className={`px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-black uppercase tracking-widest rounded-full shadow-md hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${colors.text === 'text-cyber-pink'
-                  ? 'hover:bg-cyber-pink hover:text-white'
-                  : 'hover:bg-cyber-blue hover:text-white'
-                }`}
-              id={`cta-primary-${project.id}`}
-            >
-              {getCtaLabels(project.area)[currentLang].primary}
-            </button>
-            <button
-              onClick={scrollToContact}
-              className={`px-4 py-2 sm:px-6 sm:py-3 font-black uppercase tracking-widest rounded-full hover:scale-[1.02] active:scale-95 transition-all duration-300 text-[10px] sm:text-xs ${colors.text === 'text-cyber-pink'
-                  ? 'bg-cyber-purple/20 border border-cyber-pink/30 text-white hover:border-cyber-pink hover:bg-cyber-pink hover:shadow-[0_0_20px_rgba(204,0,204,0.3)]'
-                  : 'bg-cyber-blue/10 border border-cyber-blue/30 text-white hover:border-cyber-blue hover:bg-cyber-blue hover:shadow-[0_0_20px_rgba(96,140,255,0.3)]'
-                }`}
-              id={`cta-secondary-${project.id}`}
-            >
-              {getCtaLabels(project.area)[currentLang].secondary}
-            </button>
           </div>
         </div>
       </div>

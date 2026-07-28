@@ -2,11 +2,13 @@ export type Language = 'ES' | 'EN';
 
 export interface SubWork {
   id: string;
-  image: string;
+  image?: string;
+  video?: string;
   title: { ES: string; EN: string };
   likes: number;
   commentsCount: number;
   shares: number;
+  description: { ES: string; EN: string };
 }
 
 export interface Project {
