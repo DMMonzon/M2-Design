@@ -1,24 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Language } from '../types';
 import { dict, contactDetails, skillsList, technologiesList } from '../data';
-import { 
-  Compass, 
-  Code, 
-  Search, 
-  Layers, 
-  PenTool, 
-  Figma, 
-  Globe, 
-  Cpu, 
-  Video, 
-  Grid, 
-  Volume2, 
-  Film,
+import {
+  Compass,
+  Code,
+  Search,
+  Layers,
   Phone,
   Mail,
   Linkedin,
-  FolderHeart,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle,
+  Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SiFigma, SiWordpress, SiFlutter, SiWondersharefilmora } from 'react-icons/si';
@@ -48,55 +41,38 @@ interface ContactSectionProps {
   currentLang: Language;
 }
 
+const TOPIC_OPTIONS = [
+  { id: 'apps', label: { ES: 'App', EN: 'App' } },
+  { id: 'web', label: { ES: 'Web', EN: 'Web' } },
+  { id: 'branding', label: { ES: 'Branding', EN: 'Branding' } },
+  { id: 'textil', label: { ES: 'Textil', EN: 'Textile' } },
+  { id: 'graphic', label: { ES: 'Gráfico', EN: 'Graphic' } },
+  { id: 'media', label: { ES: 'Media', EN: 'Media' } },
+  { id: 'uxui', label: { ES: 'UX/UI', EN: 'UX/UI' } },
+  { id: 'other', label: { ES: 'Otra', EN: 'Other' } },
+];
+
 export default function ContactSection({ currentLang }: ContactSectionProps) {
   const t = dict[currentLang];
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [formMessage, setFormMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const recaptchaRef = useRef<HTMLDivElement>(null);
-  const recaptchaWidgetId = useRef<number | null>(null);
+  const toggleTopic = (topicId: string) => {
+    setSelectedTopics((prev) =>
+      prev.includes(topicId)
+        ? prev.filter((id) => id !== topicId)
+        : [...prev, topicId]
+    );
+  };
 
-  useEffect(() => {
-    let active = true;
-    const initRecaptcha = () => {
-      if (window && (window as any).grecaptcha && (window as any).grecaptcha.render && recaptchaRef.current) {
-        try {
-          recaptchaWidgetId.current = (window as any).grecaptcha.render(recaptchaRef.current, {
-            sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', // standard Google test key for reCAPTCHA v2
-            theme: 'dark',
-            callback: (token: string) => {
-              if (active) setRecaptchaToken(token);
-            },
-            'expired-callback': () => {
-              if (active) setRecaptchaToken(null);
-            },
-          });
-        } catch (e) {
-          console.error("reCAPTCHA rendering error:", e);
-        }
-        return true;
-      }
-      return false;
-    };
-
-    if (!initRecaptcha()) {
-      const interval = setInterval(() => {
-        if (initRecaptcha()) {
-          clearInterval(interval);
-        }
-      }, 300);
-      return () => {
-        active = false;
-        clearInterval(interval);
-      };
-    }
-    return () => {
-      active = false;
-    };
-  }, []);
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const isEmailValid = emailRegex.test(formEmail.trim());
+  const showEmailError = emailTouched && formEmail.trim().length > 0 && !isEmailValid;
+  const canSubmit = formName.trim().length > 0 && isEmailValid && formMessage.trim().length > 0;
 
   // Helper to dynamically render icons without bundle failures
   const renderIcon = (iconName: string, className: string = 'w-4 h-4 text-cyber-blue') => {
@@ -119,22 +95,16 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formName || !formEmail || !formMessage || !recaptchaToken) return;
+    setEmailTouched(true);
+    if (!canSubmit) return;
 
     // Simulate submission to the Argentine designer
     setIsSubmitted(true);
     setFormName('');
     setFormEmail('');
+    setEmailTouched(false);
+    setSelectedTopics([]);
     setFormMessage('');
-    setRecaptchaToken(null);
-
-    if (recaptchaWidgetId.current !== null && (window as any).grecaptcha) {
-      try {
-        (window as any).grecaptcha.reset(recaptchaWidgetId.current);
-      } catch (err) {
-        console.error("Failed to reset reCAPTCHA:", err);
-      }
-    }
 
     // Reset after some seconds
     setTimeout(() => {
@@ -145,94 +115,87 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
   return (
     <section
       id="contact"
-      className="snap-section h-auto min-h-screen lg:h-screen lg:max-h-screen relative flex flex-col justify-between overflow-visible lg:overflow-hidden bg-[#050505] pt-16 pb-3 px-6 md:pt-20 lg:pt-24 lg:pb-6"
+      className="snap-section h-screen max-h-screen relative flex flex-col justify-between overflow-hidden bg-transparent pt-14 pb-3 px-6 md:pt-16 lg:pt-16 lg:pb-4"
     >
+
       {/* Grid overlay */}
-      <div className="absolute inset-0 grid-overlay opacity-15 pointer-events-none z-0" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyber-pink/5 rounded-full filter blur-[150px] pointer-events-none z-0" />
-      <div className="absolute top-12 left-12 w-[300px] h-[300px] bg-cyber-blue/5 rounded-full filter blur-[100px] pointer-events-none z-0" />
+      <div className="absolute inset-0 grid-overlay opacity-20 pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyber-pink/10 rounded-full filter blur-[170px] pointer-events-none z-0" />
+      <div className="absolute top-12 left-12 w-[350px] h-[350px] bg-cyber-blue/10 rounded-full filter blur-[130px] pointer-events-none z-0" />
 
       {/* Main Form + Info Layout */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between py-0 gap-1.5 lg:gap-2.5">
-        
-        {/* Intro Section Header */}
-        <div className="text-center lg:text-left w-full space-y-1">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black tracking-tighter text-white uppercase leading-none">
-            {t.contactTitle} {t.contactSubtitle}
-          </h2>
-          <p className="font-metrophobic text-xs sm:text-sm md:text-base text-white/80 font-normal leading-relaxed w-full">
-            {t.contactIntro}
-          </p>
-        </div>
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 min-h-0 flex flex-col justify-between py-0 gap-2 lg:gap-3">
 
-        {/* Content Cards Layout: 3 Columns side-by-side on desktop (Unified Theme Styles) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch flex-1 justify-center py-1 lg:py-2">
-          
-          {/* Card 1: Sobre mí (Cols: 3) - Dark theme */}
-          <div className="order-2 lg:order-1 lg:col-span-3 bg-[#0a0a0a] border border-white/10 rounded-2xl p-3.5 lg:p-3 shadow-xl hover:border-white/20 transition-all flex flex-col justify-between relative overflow-hidden">
-            <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// ABOUT ME</span>
-            <div>
-              <div className="flex items-center justify-between border-b border-white/5 pb-1.5 mb-2">
-                <span className="text-[10px] font-bold tracking-widest text-cyber-blue uppercase">Sobre mí</span>
-              </div>
-
-              <div className="flex flex-row lg:flex-col gap-4 lg:gap-0 justify-between items-center lg:items-stretch">
-                <div className="flex flex-row items-center gap-3 lg:mb-2 flex-1 min-w-0">
-                  {/* Avatar */}
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-full lg:h-auto lg:max-w-none lg:flex-1 select-none shrink-0">
-                    <div className="group w-full aspect-square bg-zinc-850 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-300">
-                      <img
-                        src={contactDetails.avatar}
-                        alt={contactDetails.name}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-110"
-                        id="contact-profile-avatar"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="text-left min-w-0">
-                    <h4 className="font-display font-black text-xs text-white tracking-tight uppercase leading-tight truncate">{contactDetails.name}</h4>
-                    <span className="text-[9px] text-white/40 uppercase tracking-widest block mt-0.5">
-                      {contactDetails.age} {t.yearsOld}
-                    </span>
-                    <span className="text-[9px] text-white/50 italic block mt-0.5 font-metrophobic leading-none line-clamp-2">
-                      "{contactDetails.phrase[currentLang]}"
-                    </span>
-                  </div>
-                </div>
-
-                {/* Skills/Conocimientos */}
-                <div className="space-y-1 text-left border-l border-white/5 pl-4 lg:pl-0 lg:border-l-0 lg:border-t lg:pt-1.5 lg:mt-0 flex-1 min-w-0">
-                  <span className="block text-[8px] font-mono tracking-widest text-white/35 uppercase">
-                    Conocimientos adquiridos
-                  </span>
-                  <ul className="space-y-0.5">
-                    {skillsList.map((skill, index) => (
-                      <li key={index} className="flex items-center space-x-2 text-[11px] sm:text-xs text-white/80 font-light">
-                        {renderIcon(skill.iconName, 'w-3.5 h-3.5 text-cyber-pink shrink-0')}
-                        <span className="truncate">{skill.name[currentLang]}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+        {/* Top Header: Perfil.png on Upper-Left + Section, Title & Description on Right */}
+        <div className="flex flex-row items-center gap-4 sm:gap-5 lg:gap-6 w-full">
+          {/* Avatar (Upper-Left, kept compact) */}
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 select-none shrink-0">
+            <div
+              className="group w-full h-full aspect-square bg-zinc-900 rounded-2xl overflow-hidden border border-white/20 rotate-3 hover:rotate-0 transition-transform duration-500 ease-out shadow-xl"
+            >
+              <img
+                src={contactDetails.avatar}
+                alt={contactDetails.name}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+                id="contact-profile-avatar"
+              />
             </div>
           </div>
 
-          {/* Card 2: Tecnologías (Cols: 3) - Dark theme */}
-          <div className="hidden lg:flex order-3 lg:order-2 lg:col-span-3 bg-[#0a0a0a] border border-white/10 rounded-2xl p-3.5 lg:p-3 shadow-xl hover:border-white/20 transition-all flex-col justify-between relative overflow-hidden">
-            <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// TECH STACK</span>
-            <div>
-              <div className="flex items-center justify-between border-b border-white/5 pb-1.5 mb-2">
-                <span className="text-[10px] font-bold tracking-widest text-cyber-blue uppercase">Tecnologías aplicadas</span>
-              </div>
+          {/* Text Blocks: Section, Title, Description */}
+          <div className="text-left flex-1 min-w-0 space-y-0.5 sm:space-y-1">
+            <div className="inline-flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-cyber-pink animate-ping" />
+              <span className="text-[10px] sm:text-xs font-mono tracking-[0.2em] text-cyber-pink uppercase font-bold">
+                // 08. CONTACTO & ABOUT
+              </span>
+            </div>
+            <h2 className="font-syne text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-[-0.02em] text-white uppercase leading-tight">
+              {t.contactTitle} {t.contactSubtitle}
+            </h2>
+            <p className="font-sans text-xs sm:text-sm text-white/75 font-normal leading-relaxed w-full">
+              {t.contactIntro}
+            </p>
+          </div>
+        </div>
 
-              <div className="space-y-0.5 text-left">
+        {/* Content Cards Layout: Left Vertical Block (Skills + Tech) & Right Block (Contact Form) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch flex-1 min-h-0 py-0.5">
+
+          {/* Left Column: Single Vertical Rectangular Block for Conocimientos adquiridos & Tecnologías aplicadas */}
+          <div className="order-2 lg:order-1 lg:col-span-4 glass-panel glass-panel-interactive rounded-2xl p-3.5 lg:p-4 flex flex-col justify-between relative overflow-hidden">
+            <span className="absolute top-3.5 right-4 text-[9px] font-mono text-white/30 tracking-widest">// SKILLS & STACK</span>
+
+            {/* Sub-block 1: Conocimientos adquiridos */}
+            <div className="text-left">
+              <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-cyber-pink uppercase">
+                  {t.knowledge}
+                </span>
+              </div>
+              <ul className="space-y-1">
+                {skillsList.map((skill, index) => (
+                  <li key={index} className="flex items-center space-x-2 py-0.5 text-[11px] sm:text-xs text-white/85 font-light hover:text-white transition-colors">
+                    {renderIcon(skill.iconName, 'w-3.5 h-3.5 text-cyber-pink shrink-0')}
+                    <span className="truncate">{skill.name[currentLang]}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Sub-block 2: Tecnologías aplicadas */}
+            <div className="text-left border-t border-white/10 pt-2.5 mt-2">
+              <div className="flex items-center justify-between pb-1.5 mb-1">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-cyber-blue uppercase">
+                  {t.technologies}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-x-2 gap-y-0.5">
                 {technologiesList.map((tech, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-center space-x-1.5 p-0.5 text-white/80 font-medium"
+                  <div
+                    key={index}
+                    className="flex items-center space-x-2 py-0.5 px-1 rounded-lg hover:bg-white/5 text-white/85 font-medium transition-colors"
                   >
                     {renderIcon(tech.iconName, 'w-3.5 h-3.5 text-cyber-blue shrink-0')}
                     <span className="text-[11px] sm:text-xs font-mono truncate">{tech.name}</span>
@@ -242,11 +205,11 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
             </div>
           </div>
 
-          {/* Card 3: Formulario de Contacto (Cols: 6) - Dark theme */}
-          <div className="order-1 lg:order-3 lg:col-span-6 w-full relative">
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-3.5 lg:p-4 relative overflow-hidden shadow-2xl h-full flex flex-col justify-between hover:border-white/20 transition-all">
-              <span className="absolute top-4 right-4 text-[9px] font-mono text-white/20 tracking-wider">// CONTACT FORM</span>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyber-blue/10 to-transparent rounded-bl-full pointer-events-none" />
+          {/* Right Column: Formulario de Contacto */}
+          <div className="order-1 lg:order-2 lg:col-span-8 w-full h-full relative min-h-0">
+            <div className="glass-panel glass-panel-interactive rounded-2xl p-4 lg:p-5 relative overflow-hidden shadow-2xl h-full flex flex-col justify-between">
+              <span className="absolute top-4 right-4 text-[9px] font-mono text-white/30 tracking-widest">// CONTACT FORM</span>
+              <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-cyber-blue/15 to-transparent rounded-bl-full pointer-events-none" />
 
               {/* Success Alert Banner overlay */}
               <AnimatePresence>
@@ -255,95 +218,172 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute inset-0 bg-[#050505]/95 backdrop-blur-md z-20 flex flex-col items-center justify-center text-center p-6"
+                    className="absolute inset-0 bg-[#040406]/95 backdrop-blur-xl z-20 flex flex-col items-center justify-center text-center p-6"
                     id="contact-success-overlay"
                   >
-                    <CheckCircle2 className="w-12 h-12 text-emerald-400 animate-pulse mb-3 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]" />
-                    <h3 className="font-display font-black text-white text-lg md:text-xl mb-1 uppercase">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-400 animate-pulse mb-3 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
+                    <h3 className="font-syne font-extrabold text-white text-lg md:text-xl mb-1 uppercase">
                       {currentLang === 'ES' ? '¡Mensaje Enviado!' : 'Message Sent!'}
                     </h3>
-                    <p className="text-xs text-white/50 max-w-sm leading-relaxed font-metrophobic">
+                    <p className="text-xs text-white/60 max-w-sm leading-relaxed font-sans">
                       {t.successMsg}
                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className="w-full">
-                <div className="flex items-center justify-between border-b border-white/5 pb-1.5 mb-2">
-                  <span className="text-[10px] font-bold tracking-widest text-cyber-blue uppercase">
+              <div className="w-full h-full flex flex-col justify-between">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-cyber-blue uppercase">
                     {t.contactForm}
                   </span>
                 </div>
 
-                {/* Actual Form - Dark theme inputs */}
-                <form onSubmit={handleSubmit} className="space-y-1.5">
-                  {/* Name Input */}
-                  <div className="text-left space-y-0.5">
-                    <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                      {t.formName}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formName}
-                      onChange={(e) => setFormName(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg py-1 px-2.5 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 font-metrophobic"
-                      placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
-                      id="contact-name-input"
-                    />
+                {/* Form Inputs */}
+                <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* Name Input */}
+                    <div className="text-left space-y-1">
+                      <label className="block text-[9px] font-mono uppercase font-bold text-cyber-blue tracking-[0.2em]">
+                        {t.formName}
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formName}
+                        onChange={(e) => setFormName(e.target.value)}
+                        className="w-full bg-white/[0.04] border border-white/10 rounded-xl py-2 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/40 transition-all placeholder-white/20 font-sans"
+                        placeholder={currentLang === 'ES' ? 'Ej: Martín Palermo' : 'e.g. John Doe'}
+                        id="contact-name-input"
+                      />
+                    </div>
+
+                    {/* Email Input with Verification */}
+                    <div className="text-left space-y-1">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-[9px] font-mono uppercase font-bold text-cyber-blue tracking-[0.2em]">
+                          {t.formEmail}
+                        </label>
+                        {formEmail.trim().length > 0 && (
+                          <span className={`text-[9px] font-mono flex items-center gap-1 ${isEmailValid ? 'text-emerald-400' : showEmailError ? 'text-cyber-pink' : 'text-white/40'}`}>
+                            {isEmailValid ? (
+                              <>
+                                <CheckCircle2 className="w-3 h-3" />
+                                {currentLang === 'ES' ? 'E-mail verificado' : 'Verified email'}
+                              </>
+                            ) : showEmailError ? (
+                              <>
+                                <AlertCircle className="w-3 h-3" />
+                                {currentLang === 'ES' ? 'Formato inválido' : 'Invalid format'}
+                              </>
+                            ) : null}
+                          </span>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <input
+                          type="email"
+                          required
+                          value={formEmail}
+                          onChange={(e) => setFormEmail(e.target.value)}
+                          onBlur={() => setEmailTouched(true)}
+                          className={`w-full bg-white/[0.04] border rounded-xl py-2 pl-3 pr-8 text-xs text-white focus:outline-none transition-all placeholder-white/20 font-sans ${showEmailError
+                              ? 'border-cyber-pink focus:border-cyber-pink focus:ring-1 focus:ring-cyber-pink/40'
+                              : isEmailValid
+                                ? 'border-emerald-400/50 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30'
+                                : 'border-white/10 focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/40'
+                            }`}
+                          placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
+                          id="contact-email-input"
+                        />
+                        {formEmail.trim().length > 0 && (
+                          <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">
+                            {isEmailValid ? (
+                              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                            ) : showEmailError ? (
+                              <AlertCircle className="w-4 h-4 text-cyber-pink" />
+                            ) : null}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Email Input */}
-                  <div className="text-left space-y-0.5">
-                    <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
-                      {t.formEmail}
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formEmail}
-                      onChange={(e) => setFormEmail(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg py-1 px-2.5 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 font-metrophobic"
-                      placeholder={currentLang === 'ES' ? 'martin@ejemplo.com' : 'john@example.com'}
-                      id="contact-email-input"
-                    />
+                  {/* Multi-select Topic Checkboxes right above Message Textarea */}
+                  <div className="text-left space-y-1.5 select-none">
+                    <div className="flex items-center justify-between">
+                      <span className="block text-[9px] font-mono uppercase font-bold text-cyber-blue tracking-[0.2em]">
+                        {currentLang === 'ES' ? 'Áreas de interés (puedes elegir varias)' : 'Areas of interest (select all that apply)'}
+                      </span>
+                      {selectedTopics.length > 0 && (
+                        <span className="text-[9px] font-mono text-cyber-pink font-semibold">
+                          {selectedTopics.length} {currentLang === 'ES' ? (selectedTopics.length === 1 ? 'seleccionada' : 'seleccionadas') : 'selected'}
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+                      {TOPIC_OPTIONS.map((topic) => {
+                        const isChecked = selectedTopics.includes(topic.id);
+                        return (
+                          <button
+                            key={topic.id}
+                            type="button"
+                            role="checkbox"
+                            aria-checked={isChecked}
+                            onClick={() => toggleTopic(topic.id)}
+                            className={`flex items-center justify-center sm:justify-start gap-1.5 px-2 py-1.5 rounded-lg border text-[10px] font-mono transition-all duration-200 cursor-pointer ${
+                              isChecked
+                                ? 'bg-cyber-blue/20 border-cyber-blue text-white shadow-[0_0_12px_rgba(96,140,255,0.25)]'
+                                : 'bg-white/[0.03] border-white/10 text-white/60 hover:border-white/25 hover:text-white/90 hover:bg-white/[0.06]'
+                            }`}
+                          >
+                            <span
+                              className={`w-3.5 h-3.5 rounded-[4px] border flex items-center justify-center shrink-0 transition-colors ${
+                                isChecked
+                                  ? 'bg-cyber-blue border-cyber-blue text-black'
+                                  : 'border-white/25 bg-black/40'
+                              }`}
+                            >
+                              {isChecked && <Check className="w-2.5 h-2.5 stroke-[3]" />}
+                            </span>
+                            <span className="truncate font-medium">{topic.label[currentLang]}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  {/* Message Textarea */}
-                  <div className="text-left space-y-0.5">
-                    <label className="block text-[9px] uppercase font-black text-cyber-blue tracking-[0.2em]">
+                  {/* Enlarged Message Textarea */}
+                  <div className="text-left flex-1 flex flex-col space-y-1 min-h-0">
+                    <label className="block text-[9px] font-mono uppercase font-bold text-cyber-blue tracking-[0.2em]">
                       {t.formMessage}
                     </label>
                     <textarea
                       required
-                      rows={2}
+                      rows={4}
                       value={formMessage}
                       onChange={(e) => setFormMessage(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg py-1 px-2.5 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/30 transition-all placeholder-white/20 resize-none font-metrophobic"
-                      placeholder={currentLang === 'ES' ? '¿Qué tenés en mente?' : 'What do you have in mind?'}
+                      className="w-full flex-1 min-h-[95px] bg-white/[0.04] border border-white/10 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue/40 transition-all placeholder-white/20 resize-none font-sans leading-relaxed"
+                      placeholder={currentLang === 'ES' ? '¿Qué tenés en mente? Contame sobre tu proyecto, objetivos o ideas...' : 'What do you have in mind? Tell me about your project, goals, or ideas...'}
                       id="contact-message-input"
                     />
                   </div>
 
-                  {/* reCAPTCHA Validation */}
-                  <div className="flex justify-center py-0.5 select-none">
-                    <div ref={recaptchaRef} />
-                  </div>
-
-                  {/* Submit button styled like other primary buttons */}
-                  <button
+                  {/* Submit button */}
+                  <motion.button
+                    whileHover={{ scale: canSubmit ? 1.01 : 1 }}
+                    whileTap={{ scale: canSubmit ? 0.99 : 1 }}
                     type="submit"
-                    disabled={!recaptchaToken}
-                    className={`w-full py-1.5 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-lg transition-all duration-300 shadow-md ${
-                      !recaptchaToken
-                        ? 'opacity-40 cursor-not-allowed'
-                        : 'hover:bg-cyber-blue hover:text-white cursor-pointer active:scale-95'
+                    disabled={!canSubmit}
+                    className={`shine-button w-full py-2.5 bg-white text-black text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-xl ${
+                      !canSubmit
+                        ? 'opacity-35 cursor-not-allowed'
+                        : 'hover:bg-cyber-blue hover:text-white cursor-pointer'
                     }`}
                     id="contact-submit-btn"
                   >
                     {t.formSubmit}
-                  </button>
+                  </motion.button>
                 </form>
               </div>
             </div>
@@ -351,60 +391,65 @@ export default function ContactSection({ currentLang }: ContactSectionProps) {
 
         </div>
 
-        {/* Footer/Contact Info Bar - Black strip at the bottom */}
-        <div className="w-full flex flex-row items-center justify-center gap-4 md:gap-10 lg:gap-14 py-2 bg-black/60 border border-white/10 rounded-xl mt-1 select-none shadow-lg">
+        {/* Footer / Contact Bar */}
+        <div className="w-full flex flex-row items-center justify-center gap-4 md:gap-10 lg:gap-14 py-2.5 bg-black/70 border border-white/10 rounded-2xl mt-1 select-none shadow-2xl backdrop-blur-xl">
           {/* Behance */}
-          <a
+          <motion.a
+            whileHover={{ scale: 1.06 }}
             href="https://behance.net/dmmonzon82"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors group"
           >
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center font-bold text-sm text-white group-hover:bg-zinc-700 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-zinc-850 border border-white/15 flex items-center justify-center font-bold text-sm text-white group-hover:border-cyber-blue transition-colors">
               Bē
             </div>
-            <span className="hidden md:inline font-metrophobic text-xs sm:text-sm font-normal leading-relaxed">@dmmonzon82</span>
-          </a>
+            <span className="hidden md:inline font-mono text-xs font-normal">@dmmonzon82</span>
+          </motion.a>
 
           {/* LinkedIn */}
-          <a
+          <motion.a
+            whileHover={{ scale: 1.06 }}
             href="https://linkedin.com/in/DiegoMartinMonzon"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors group"
           >
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-zinc-700 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-zinc-850 border border-white/15 flex items-center justify-center text-white group-hover:border-cyber-blue transition-colors">
               <Linkedin className="w-4 h-4" />
             </div>
-            <span className="hidden md:inline font-metrophobic text-xs sm:text-sm font-normal leading-relaxed">DiegoMartinMonzon</span>
-          </a>
+            <span className="hidden md:inline font-mono text-xs font-normal">DiegoMartinMonzon</span>
+          </motion.a>
 
           {/* Phone */}
-          <a
+          <motion.a
+            whileHover={{ scale: 1.06 }}
             href="https://wa.me/5491165298800"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors group"
           >
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-zinc-700 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-zinc-850 border border-white/15 flex items-center justify-center text-white group-hover:border-cyber-blue transition-colors">
               <Phone className="w-4 h-4" />
             </div>
-            <span className="font-metrophobic text-[10px] sm:text-xs md:text-sm font-normal leading-relaxed">+54 9 (011) 15 6529 8800</span>
-          </a>
+            <span className="font-mono text-[10px] sm:text-xs font-normal">+54 9 (011) 15 6529 8800</span>
+          </motion.a>
 
           {/* Email */}
-          <a
+          <motion.a
+            whileHover={{ scale: 1.06 }}
             href="mailto:dmmonzon82@gmail.com"
-            className="flex items-center space-x-2.5 text-white/80 hover:text-white transition-colors group"
+            className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors group"
           >
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-white group-hover:bg-zinc-700 transition-colors">
+            <div className="w-8 h-8 rounded-lg bg-zinc-850 border border-white/15 flex items-center justify-center text-white group-hover:border-cyber-blue transition-colors">
               <Mail className="w-4 h-4" />
             </div>
-            <span className="font-metrophobic text-[10px] sm:text-xs md:text-sm font-normal leading-relaxed">dmmonzon82@gmail.com</span>
-          </a>
+            <span className="font-mono text-[10px] sm:text-xs font-normal">dmmonzon82@gmail.com</span>
+          </motion.a>
         </div>
 
       </div>
     </section>
   );
 }
+

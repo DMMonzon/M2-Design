@@ -13,7 +13,7 @@ export interface SubWork {
 
 export interface Project {
   id: string;
-  area: 'apps' | 'web' | 'graphic' | 'textil' | 'branding' | 'media';
+  area: 'apps' | 'web' | 'uxui' | 'graphic' | 'textil' | 'branding' | 'media';
   areaLabel: { ES: string; EN: string };
   title: { ES: string; EN: string };
   description: { ES: string; EN: string };

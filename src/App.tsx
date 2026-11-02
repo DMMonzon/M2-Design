@@ -5,8 +5,10 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import ProjectSection from './components/ProjectSection';
 import ContactSection from './components/ContactSection';
+import ReactiveAuroraBackground from './components/ReactiveAuroraBackground';
 import { motion, AnimatePresence } from 'motion/react';
-import { Share2, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
+import { EASE_EDITORIAL, EASE_BOUNCE } from './utils/motion';
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>('ES');
@@ -34,7 +36,6 @@ export default function App() {
 
   // Handle Copy Link / Share
   const handleShare = (title: string) => {
-    // Copy mockup link to clipboard
     const dummyUrl = `${window.location.origin}/#${title.toLowerCase().replace(/\s+/g, '-')}`;
     navigator.clipboard.writeText(dummyUrl).then(() => {
       showToast(dict[currentLang].shared);
@@ -48,10 +49,10 @@ export default function App() {
     setToastMessage(message);
     setTimeout(() => {
       setToastMessage(null);
-    }, 4000);
+    }, 3800);
   };
 
-  // Setup intersection observer to track which section is currently active
+  // Setup intersection observer to track active section
   useEffect(() => {
     const sections = ['hero', ...projectsData.map((p) => p.id), 'contact'];
     const observers = sections.map((id) => {
@@ -68,7 +69,7 @@ export default function App() {
         },
         {
           root: null,
-          rootMargin: '-50% 0px -50% 0px', // Trigger when section occupies center 50% of screen
+          rootMargin: '-50% 0px -50% 0px',
           threshold: 0,
         }
       );
@@ -86,23 +87,14 @@ export default function App() {
     };
   }, []);
 
-  const allSections = [
-    { id: 'hero', label: { ES: 'Inicio', EN: 'Home' } },
-    ...projectsData.map((p) => ({ id: p.id, label: p.areaLabel })),
-    { id: 'contact', label: { ES: 'Contacto', EN: 'Contact' } },
-  ];
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white selection:bg-cyber-pink selection:text-white">
-      {/* Absolute top grid background */}
-      <div className="absolute inset-x-0 top-0 h-[800px] grid-overlay opacity-25 pointer-events-none" />
+    <div className="relative min-h-screen bg-[#050507] text-white selection:bg-cyber-pink selection:text-white font-sans">
+      {/* Interactive Mesh Gradient & Aurora Reactiva */}
+      <ReactiveAuroraBackground />
+
+      {/* Grid overlay */}
+      <div className="absolute inset-x-0 top-0 h-[900px] grid-overlay opacity-20 pointer-events-none" />
+
 
       {/* Header element */}
       <Header
@@ -137,13 +129,14 @@ export default function App() {
       <AnimatePresence>
         {toastMessage && (
           <motion.div
-            initial={{ opacity: 0, y: 50, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: 50, x: '-50%' }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#0a0a0a]/95 border border-cyber-blue/30 px-6 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 backdrop-blur-md glow-blue"
+            initial={{ opacity: 0, y: 40, x: '-50%', scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, x: '-50%', scale: 1 }}
+            exit={{ opacity: 0, y: 30, x: '-50%', scale: 0.95 }}
+            transition={{ duration: 0.45, ease: EASE_BOUNCE }}
+            className="fixed bottom-6 left-1/2 z-50 glass-panel border border-cyber-blue/40 px-6 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 glow-blue"
             id="toast-notification"
           >
-            <div className="w-6 h-6 rounded-full bg-cyber-blue/10 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full bg-cyber-blue/20 flex items-center justify-center border border-cyber-blue/40">
               <Check className="w-3.5 h-3.5 text-cyber-blue" />
             </div>
             <span className="text-xs md:text-sm font-mono text-white tracking-wide font-medium">
@@ -155,3 +148,4 @@ export default function App() {
     </div>
   );
 }
+

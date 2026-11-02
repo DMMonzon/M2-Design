@@ -95,26 +95,6 @@ export const projectsData: Project[] = [
     examples: [
       {
         id: 'web-ex-1',
-        title: { ES: 'Rediseño VWFS', EN: 'VWFS Redesign' },
-        image: '/assets/img/WebVWFS.png?auto=format&fit=crop&w=1200&h=800&q=80',
-        likes: 245,
-        commentsCount: 38,
-        shares: 94,
-        description: {
-          ES: `Rediseño integral de la plataforma web de Volkswagen Financial Services enfocado en transformar una herramienta de gestión operativa en un activo comercial altamente eficiente.
-
-La propuesta metodológica se fundamentó en el marco de los 5 elementos del diseño de experiencia de usuario de Jesse James Garrett (Estrategia, Alcance, Estructura, Esqueleto y Superficie) para resolver fricciones de usabilidad y mejorar la navegación.
-
-El trabajo priorizó la optimización de flujos de trabajo, aportando una solución integral de diseño UX/UI orientada a brindar mayor claridad, velocidad y funcionalidad tanto al usuario como al negocio.`,
-          EN: `Integral redesign of the Volkswagen Financial Services website focused on transforming an operational management tool into a highly efficient commercial asset.
-
-The methodological proposal was based on Jesse James Garrett's 5 elements of user experience design (Strategy, Scope, Structure, Skeleton, and Surface) to resolve usability friction and improve navigation.
-
-The work prioritized workflow optimization, providing an integral UX/UI design solution oriented to bring greater clarity, speed and functionality to both the user and the business.`
-        }
-      },
-      {
-        id: 'web-ex-2',
         title: { ES: 'Portal Web de Noticias', EN: 'News Website' },
         image: '/assets/img/WebEntreHockey.png?auto=format&fit=crop&w=1200&h=800&q=80',
         likes: 312,
@@ -134,7 +114,7 @@ Backend and frontend development was carried out entirely by combining ASP, HTML
         }
       },
       {
-        id: 'web-ex-3',
+        id: 'web-ex-2',
         title: { ES: 'SaaS Platform Dashboard', EN: 'SaaS Platform Dashboard' },
         image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&h=800&q=80',
         likes: 403,
@@ -143,6 +123,90 @@ Backend and frontend development was carried out entirely by combining ASP, HTML
         description: {
           ES: 'Panel de administración intuitivo con gráficos interactivos en tiempo real, gestión de usuarios avanzada y reportería automatizada.',
           EN: `Intuitive administration dashboard with real-time interactive charts, advanced user management, and automated reporting.`
+        }
+      },
+      {
+        id: 'web-ex-3',
+        title: { ES: 'E-Commerce Headless', EN: 'Headless E-Commerce' },
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 278,
+        commentsCount: 44,
+        shares: 96,
+        description: {
+          ES: 'Tienda online de carga ultrarrápida optimizada para SEO técnico, catálogo dinámico con filtros instantáneos e integración fluida con pasarelas de pago.',
+          EN: `Ultra-fast online store optimized for technical SEO, featuring a dynamic catalog with instant filtering and seamless payment gateway integration.`
+        }
+      }
+    ]
+  },
+  {
+    id: 'proj-uxui',
+    area: 'uxui',
+    areaLabel: { ES: 'UX/UI', EN: 'UX/UI' },
+    title: {
+      ES: 'Diseño centrado en las personas: interfaces que convierten.',
+      EN: 'Design centered on people: interfaces that convert.',
+    },
+    description: {
+      ES: 'Diseño experiencias digitales estratégicas basadas en investigación de usuarios, arquitectura de información y sistemas de diseño escalables. Transformemos flujos complejos en interfaces claras, accesibles y memorables.',
+      EN: `I design strategic digital experiences grounded in user research, information architecture, and scalable design systems. Let's transform complex workflows into clear, accessible, and memorable interfaces.`,
+    },
+    testimonial: {
+      name: 'Valentina Quiroga',
+      role: { ES: 'Product Manager en FinTech Sur', EN: 'Product Manager at FinTech Sur' },
+      text: {
+        ES: 'Martín reestructuró todo el flujo de nuestra plataforma, reduciendo la fricción de uso un 40% desde el primer mes.',
+        EN: `Martín restructured our entire platform workflow. We reduced usability friction by 40% in the very first month.`,
+      },
+      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&h=120&q=80',
+    },
+    image: '/assets/img/WebVWFS.png?auto=format&fit=crop&w=1200&h=800&q=80',
+    likes: 345,
+    commentsCount: 52,
+    shares: 118,
+    examples: [
+      {
+        id: 'uxui-ex-1',
+        title: { ES: 'Rediseño VWFS', EN: 'VWFS Redesign' },
+        image: '/assets/img/WebVWFS.png?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 245,
+        commentsCount: 38,
+        shares: 94,
+        description: {
+          ES: `Rediseño integral de la plataforma web de Volkswagen Financial Services enfocado en transformar una herramienta de gestión operativa en un activo comercial altamente eficiente.
+
+La propuesta metodológica se fundamentó en el marco de los 5 elementos del diseño de experiencia de usuario de Jesse James Garrett (Estrategia, Alcance, Estructura, Esqueleto y Superficie) para resolver fricciones de usabilidad y mejorar la navegación.
+
+El trabajo priorizó la optimización de flujos de trabajo, aportando una solución integral de diseño UX/UI orientada a brindar mayor claridad, velocidad y funcionalidad tanto al usuario como al negocio.`,
+          EN: `Integral redesign of the Volkswagen Financial Services website focused on transforming an operational management tool into a highly efficient commercial asset.
+
+The methodological proposal was based on Jesse James Garrett's 5 elements of user experience design (Strategy, Scope, Structure, Skeleton, and Surface) to resolve usability friction and improve navigation.
+
+The work prioritized workflow optimization, providing an integral UX/UI design solution oriented to bring greater clarity, speed and functionality to both the user and the business.`
+        }
+      },
+      {
+        id: 'uxui-ex-2',
+        title: { ES: 'Design System & UI Kit', EN: 'Design System & UI Kit' },
+        image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 289,
+        commentsCount: 41,
+        shares: 87,
+        description: {
+          ES: 'Sistema de diseño modular en Figma con tokens de color, tipografía escalable, componentes interactivos reutilizables y estándares de accesibilidad WCAG AA para acelerar el desarrollo.',
+          EN: `Modular design system in Figma featuring color tokens, scalable typography, reusable interactive components, and WCAG AA accessibility standards to accelerate product development.`
+        }
+      },
+      {
+        id: 'uxui-ex-3',
+        title: { ES: 'Optimización de Onboarding', EN: 'Onboarding UX Optimization' },
+        image: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&h=800&q=80',
+        likes: 334,
+        commentsCount: 49,
+        shares: 105,
+        description: {
+          ES: 'Investigación UX, mapeo de user journeys, wireframing y prototipado de alta fidelidad enfocados en simplificar el registro y maximizar la tasa de conversión.',
+          EN: `UX research, user journey mapping, wireframing, and high-fidelity prototyping focused on simplifying user onboarding and maximizing conversion rates.`
         }
       }
     ]
